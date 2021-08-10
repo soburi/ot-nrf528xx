@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013 - 2019, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2020, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -37,41 +37,89 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-/** @cond */
-/**@file
- *
- * @ingroup experimental_api
- * @defgroup sdk_common SDK Common Header
- * @brief All common headers needed for SDK examples will be included here so that application
- *       developer does not have to include headers on him/herself.
- * @{
- */
 
-#ifndef SDK_COMMON_H__
-#define SDK_COMMON_H__
+#include "sdk_common.h"
 
-#include <stdint.h>
-#include <stdbool.h>
-#include <string.h>
-#include "sdk_config.h"
-#include "nordic_common.h"
-#include "compiler_abstraction.h"
-#include "sdk_os.h"
-#include "sdk_errors.h"
-#include "app_util.h"
-#include "sdk_macros.h"
+#if NRF_MODULE_ENABLED(NRF_SECTION_ITER)
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include "nrf_section_iter.h"
 
 
-/** @} */
-/** @endcond */
+#if !defined(__GNUC__)
+static void nrf_section_iter_item_set(nrf_section_iter_t * p_iter)
+{
+    ASSERT(p_iter            != NULL);
+    ASSERT(p_iter->p_set     != NULL);
+    ASSERT(p_iter->p_section != NULL);
 
-#ifdef __cplusplus
+    while (true)
+    {
+        if (p_iter->p_section == p_iter->p_set->p_last)
+        {
+            // End of the section set.
+            p_iter->p_item = NULL;
+            return;
+        }
+
+        if (p_iter->p_section->p_start != p_iter->p_section->p_end)
+        {
+            // Not empty section.
+            p_iter->p_item = p_iter->p_section->p_start;
+            return;
+        }
+
+        // Next section.
+        p_iter->p_section++;
+    }
 }
 #endif
 
-#endif // SDK_COMMON_H__
 
+void nrf_section_iter_init(nrf_section_iter_t * p_iter, nrf_section_set_t const * p_set)
+{
+    ASSERT(p_iter != NULL);
+    ASSERT(p_set  != NULL);
+
+    p_iter->p_set = p_set;
+
+#if defined(__GNUC__)
+    p_iter->p_item = p_iter->p_set->section.p_start;
+    if (p_iter->p_item == p_iter->p_set->section.p_end)
+    {
+        p_iter->p_item = NULL;
+    }
+#else
+    p_iter->p_section = p_set->p_first;
+    nrf_section_iter_item_set(p_iter);
+#endif
+}
+
+void nrf_section_iter_next(nrf_section_iter_t * p_iter)
+{
+    ASSERT(p_iter        != NULL);
+    ASSERT(p_iter->p_set != NULL);
+
+    if (p_iter->p_item == NULL)
+    {
+        return;
+    }
+
+    p_iter->p_item = (void *)((size_t)(p_iter->p_item) + p_iter->p_set->item_size);
+
+#if defined(__GNUC__)
+    if (p_iter->p_item == p_iter->p_set->section.p_end)
+    {
+        p_iter->p_item = NULL;
+    }
+#else
+    ASSERT(p_iter->p_section != NULL);
+    // End of current section reached?
+    if (p_iter->p_item == p_iter->p_section->p_end)
+    {
+        p_iter->p_section++;
+        nrf_section_iter_item_set(p_iter);
+    }
+#endif
+}
+
+#endif // NRF_MODULE_ENABLED(NRF_SECTION_ITER)

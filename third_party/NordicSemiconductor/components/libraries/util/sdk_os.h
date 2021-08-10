@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2013 - 2020, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -37,55 +37,40 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-#ifndef NRF_LOG_CTRL_INTERNAL_H
-#define NRF_LOG_CTRL_INTERNAL_H
-/**
- * @cond (NODOX)
- * @defgroup nrf_log_ctrl_internal Auxiliary internal types declarations
+/** @cond */
+/**@file
+ *
+ * @defgroup sdk_os SDK OS Abstraction
+ * @ingroup experimental_api
+ * @details In order to made SDK modules independent of use of an embedded OS, and permit
+ *          application with varied task architecture, SDK abstracts the OS specific
+ *          elements here in order to make all other modules agnostic to the OS or task
+ *          architecture.
  * @{
- * @internal
  */
 
-#include "sdk_common.h"
-#if NRF_MODULE_ENABLED(NRF_LOG)
+#ifndef SDK_OS_H__
+#define SDK_OS_H__
 
-#define NRF_LOG_LFCLK_FREQ 32768
-
-#ifdef APP_TIMER_CONFIG_RTC_FREQUENCY
-#define LOG_TIMESTAMP_DEFAULT_FREQUENCY ((NRF_LOG_TIMESTAMP_DEFAULT_FREQUENCY == 0) ?              \
-                                       (NRF_LOG_LFCLK_FREQ/(APP_TIMER_CONFIG_RTC_FREQUENCY + 1)) : \
-                                        NRF_LOG_TIMESTAMP_DEFAULT_FREQUENCY)
-#else
-#define LOG_TIMESTAMP_DEFAULT_FREQUENCY NRF_LOG_TIMESTAMP_DEFAULT_FREQUENCY
+#ifdef __cplusplus
+extern "C" {
 #endif
 
-#define NRF_LOG_INTERNAL_INIT(...)               \
-        nrf_log_init(GET_VA_ARG_1(__VA_ARGS__),  \
-                     GET_VA_ARG_1(GET_ARGS_AFTER_1(__VA_ARGS__, LOG_TIMESTAMP_DEFAULT_FREQUENCY)))
+#define SDK_MUTEX_DEFINE(X)
+#define SDK_MUTEX_INIT(X)
+#define SDK_MUTEX_LOCK(X)
+#define SDK_MUTEX_UNLOCK(X)
 
-#define NRF_LOG_INTERNAL_PROCESS() nrf_log_frontend_dequeue()
-#define NRF_LOG_INTERNAL_FLUSH()            \
-    do {                                    \
-        while (NRF_LOG_INTERNAL_PROCESS()); \
-    } while (0)
-
-#define NRF_LOG_INTERNAL_FINAL_FLUSH()      \
-    do {                                    \
-        nrf_log_panic();                    \
-        NRF_LOG_INTERNAL_FLUSH();           \
-    } while (0)
-
-
-#else // NRF_MODULE_ENABLED(NRF_LOG)
-#define NRF_LOG_INTERNAL_PROCESS()            false
-#define NRF_LOG_INTERNAL_FLUSH()
-#define NRF_LOG_INTERNAL_INIT(timestamp_func) NRF_SUCCESS
-#define NRF_LOG_INTERNAL_HANDLERS_SET(default_handler, bytes_handler) \
-    UNUSED_PARAMETER(default_handler); UNUSED_PARAMETER(bytes_handler)
-#define NRF_LOG_INTERNAL_FINAL_FLUSH()
-#endif // NRF_MODULE_ENABLED(NRF_LOG)
-
-/** @}
- * @endcond
+/**
+ * @defgroup os_data_type Data types.
  */
-#endif // NRF_LOG_CTRL_INTERNAL_H
+
+/** @} */
+/** @endcond */
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif // SDK_OS_H__
+

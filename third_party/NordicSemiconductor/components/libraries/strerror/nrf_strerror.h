@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013 - 2019, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2020, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -37,40 +37,53 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-/** @cond */
-/**@file
+
+/**
+ * @defgroup nrf_strerror Error code to string converter
+ * @ingroup app_common
  *
- * @defgroup sdk_os SDK OS Abstraction
- * @ingroup experimental_api
- * @details In order to made SDK modules independent of use of an embedded OS, and permit
- *          application with varied task architecture, SDK abstracts the OS specific
- *          elements here in order to make all other modules agnostic to the OS or task
- *          architecture.
+ * @brief Module for converting error code into a printable string.
  * @{
  */
+#ifndef NRF_STRERROR_H__
+#define NRF_STRERROR_H__
 
-#ifndef SDK_OS_H__
-#define SDK_OS_H__
+#include "sdk_errors.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#define SDK_MUTEX_DEFINE(X)
-#define SDK_MUTEX_INIT(X)
-#define SDK_MUTEX_LOCK(X)
-#define SDK_MUTEX_UNLOCK(X)
+/**
+ * @brief Function for getting a printable error string.
+ *
+ * @param code Error code to convert.
+ *
+ * @note This function cannot fail.
+ *       For the function that may fail with error translation, see @ref nrf_strerror_find.
+ *
+ * @return Pointer to the printable string.
+ *         If the string is not found,
+ *         it returns a simple string that says that the error is unknown.
+ */
+char const * nrf_strerror_get(ret_code_t code);
 
 /**
- * @defgroup os_data_type Data types.
+ * @brief Function for finding a printable error string.
+ *
+ * This function gets the error string in the same way as @ref nrf_strerror_get,
+ * but if the string is not found, it returns NULL.
+ *
+ * @param code  Error code to convert.
+ * @return      Pointer to the printable string.
+ *              If the string is not found, NULL is returned.
  */
+char const * nrf_strerror_find(ret_code_t code);
 
 /** @} */
-/** @endcond */
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // SDK_OS_H__
-
+#endif /* NRF_STRERROR_H__ */
