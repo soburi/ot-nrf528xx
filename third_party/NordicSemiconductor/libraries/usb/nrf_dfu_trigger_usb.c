@@ -41,7 +41,7 @@
 #include "app_usbd.h"
 #include "app_usbd_nrf_dfu_trigger.h"
 #include "nrf_drv_clock.h"
-#include "nrf_log_ctrl.h"
+//#include "nrf_log_ctrl.h"
 #include "nrf_gpio.h"
 #include "app_util.h"
 #include "app_usbd_serial_num.h"
