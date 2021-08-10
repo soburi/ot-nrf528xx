@@ -55,16 +55,6 @@ set(EXAMPLE_INCLUDES
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/drivers/power
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/drivers/systick
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/drivers/usbd
-    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/libraries/app_error
-    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/libraries/atfifo
-    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/libraries/atomic
-    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/libraries/block_dev
-    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/libraries/delay
-    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/libraries/usb
-    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/libraries/usb/config
-    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/libraries/usb/class/cdc
-    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/libraries/usb/class/cdc/acm
-    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/libraries/utf_converter
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/hal
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/drivers
@@ -89,9 +79,8 @@ set(COMMON_SOURCES
     components/libraries/util/app_util_platform.c
     drivers/clock/nrf_drv_clock.c
     drivers/power/nrf_drv_power.c
-    libraries/app_error/app_error.c
-    libraries/app_error/app_error_weak.c
-    libraries/utf_converter/utf.c
+    components/libraries/util/app_error.c
+    components/libraries/util/app_error_handler_gcc.c
     nrfx/drivers/src/nrfx_clock.c
     nrfx/drivers/src/nrfx_nvmc.c
     nrfx/drivers/src/nrfx_power.c
@@ -102,15 +91,6 @@ set(COMMON_SOURCES
 
 set(USB_SOURCES
     nrfx/drivers/src/nrfx_usbd.c
-    libraries/atfifo/nrf_atfifo.c
-    libraries/atomic/nrf_atomic.c
-    libraries/usb/app_usbd.c
-    libraries/usb/app_usbd_core.c
-    libraries/usb/app_usbd_string_desc.c
-    libraries/usb/app_usbd_serial_num.c
-    libraries/usb/app_usbd_nrf_dfu_trigger.c
-    libraries/usb/nrf_dfu_trigger_usb.c
-    libraries/usb/class/cdc/acm/app_usbd_cdc_acm.c
 )
 
 set(RADIO_DRIVER_SOURCES

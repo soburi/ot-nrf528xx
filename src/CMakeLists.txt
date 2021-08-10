@@ -54,7 +54,6 @@ set(NRF_TRANSPORT_SOURCES
     src/transport/spi-slave.c
     src/transport/transport.c
     src/transport/uart.c
-    src/transport/usb-cdc-uart.c
 )
 
 set(NRF_SINGLEPHY_SOURCES
