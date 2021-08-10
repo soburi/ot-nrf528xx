@@ -46,7 +46,10 @@ set(EXAMPLE_INCLUDES
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/cmsis
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/config
-    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/dependencies
+    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/components/libraries/experimental_section_vars
+    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/components/libraries/log
+    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/components/libraries/strerror
+    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/components/libraries/util
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/drivers/clock
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/drivers/common
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/drivers/power
@@ -83,7 +86,7 @@ set(COMMON_FLAG
 )
 
 set(COMMON_SOURCES
-    dependencies/app_util_platform.c
+    components/libraries/util/app_util_platform.c
     drivers/clock/nrf_drv_clock.c
     drivers/power/nrf_drv_power.c
     libraries/app_error/app_error.c
