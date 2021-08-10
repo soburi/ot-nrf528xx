@@ -39,6 +39,47 @@ readonly OT_OPTIONS=(
     "-DCMAKE_BUILD_TYPE=MinSizeRel"
     "-DOT_PLATFORM=external"
     "-DOT_SLAAC=ON"
+
+
+    "-DOT_BORDER_AGENT=OFF"
+    "-DOT_BORDER_ROUTER=OFF"
+    "-DOT_COAP=ON"
+"-DOT_COAP_BLOCK=OFF"
+"-DOT_COAP_OBSERVE=OFF"
+    "-DOT_COAPS=ON"
+"-DOT_COMMISSIONER=OFF"
+"-DOT_CHANNEL_MANAGER=OFF"
+"-DOT_CHANNEL_MONITOR=OFF"
+    "-DOT_CHILD_SUPERVISION=ON"
+"-DOT_DATASET_UPDATER=OFF"
+    "-DOT_DHCP6_CLIENT=ON"
+"-DOT_DHCP6_SERVER=OFF"
+"-DOT_DIAGNOSTIC=OFF"
+    "-DOT_DNS_CLIENT=ON"
+    "-DOT_ECDSA=ON"
+"-DOT_IP6_FRAGM=OFF"
+"-DOT_IP6_SLAAC=ON"
+    "-DOT_JAM_DETECTION=ON"
+    "-DOT_JOINER=ON"
+"-DOT_LEGACY=OFF"
+"-DOT_LINK_RAW=OFF"
+    "-DOT_MAC_FILTER=ON"
+    "-DOT_MTD_NETDIAG=OFF"
+"-DOT_NEIGHBOR_DISCOVERY_AGENT=OFF"
+"-DOT_PING_SENDER=OFF"
+"-DOT_REFERENCE_DEVICE=OFF"
+"-DOT_SERVICE=OFF"
+    "-DOT_SNTP_CLIENT=ON"
+"-DOT_SRP_CLIENT=OFF"
+"-DOT_UDP_FORWARD=OFF"
+    "-DOT_COVERAGE=OFF"
+    "-DOT_LOG_LEVEL_DYNAMIC=ON"
+    "-DOT_COMPILE_WARNING_AS_ERROR=ON"
+    "-DOT_RCP_RESTORATION_MAX_COUNT=2"
+"-DOT_BUILTIN_MBEDTLS_MANAGEMENT=OFF"
+"-DOT_EXTERNAL_HEAP=ON"
+"-DOT_ASSERT=OFF"
+"-DOT_LOG_LEVEL_DYNAMIC=OFF"
 )
 
 die()
@@ -57,9 +98,9 @@ build()
     cmake -GNinja -DOT_COMPILE_WARNING_AS_ERROR=ON "$@" "${OT_SRCDIR}"
 
     if [[ -n ${OT_CMAKE_NINJA_TARGET[*]} ]]; then
-        ninja "${OT_CMAKE_NINJA_TARGET[@]}"
+        ninja -v "${OT_CMAKE_NINJA_TARGET[@]}"
     else
-        ninja
+        ninja -v
     fi
 
     cd "${OT_SRCDIR}"
@@ -125,6 +166,7 @@ main()
                     options+=("${local_options[@]}" "-DOT_EXTERNAL_MBEDTLS=nordicsemi-mbedtls")
                     ;;
                 USB_trans)
+                    OT_CMAKE_NINJA_TARGET=("ot-cli-ftd" "ot-cli-mtd")
                     options+=("${local_options[@]}" "-DOT_USB=ON" "-DOT_EXTERNAL_MBEDTLS=nordicsemi-mbedtls")
                     ;;
                 SPI_trans_NCP)
