@@ -77,8 +77,7 @@ set(COMMON_FLAG
 
 set(COMMON_SOURCES
     components/libraries/util/app_util_platform.c
-    drivers/clock/nrf_drv_clock.c
-    drivers/power/nrf_drv_power.c
+    nrfx/legacy/nrf_drv_clock.c
     components/libraries/util/app_error.c
     components/libraries/util/app_error_handler_gcc.c
     nrfx/drivers/src/nrfx_clock.c
