@@ -51,12 +51,12 @@
 
 #include "sdk_common.h"
 #include "nrf_section.h"
-#if NRF_MODULE_ENABLED(NRF_LOG)
-#include "nrf_strerror.h"
-#define NRF_LOG_ERROR_STRING_GET(code) nrf_strerror_get(code)
-#else
+//#if NRF_MODULE_ENABLED(NRF_LOG)
+//#include "nrf_strerror.h"
+//#define NRF_LOG_ERROR_STRING_GET(code) nrf_strerror_get(code)
+//#else
 #define NRF_LOG_ERROR_STRING_GET(code) ""
-#endif
+//#endif
 
 
 #ifdef __cplusplus

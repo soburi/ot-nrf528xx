@@ -57,7 +57,7 @@ __STATIC_INLINE void dataReadyEventClear(void)
 void nrf5TempInit(void)
 {
 #if !SOFTDEVICE_PRESENT
-    nrf_temp_init();
+//    nrf_temp_init();
 
     NRF_TEMP->TASKS_START = 1;
 #endif
@@ -88,7 +88,7 @@ void nrf5TempProcess(void)
     {
         dataReadyEventClear();
 
-        sTemperature = nrf_temp_read();
+//        sTemperature = nrf_temp_read();
     }
 
     now = nrf5AlarmGetCurrentTime();

@@ -94,7 +94,6 @@ set(COMMON_SOURCES
     nrfx/drivers/src/nrfx_power.c
     nrfx/drivers/src/nrfx_spis.c
     nrfx/drivers/src/nrfx_systick.c
-    nrfx/hal/nrf_nvmc.c
     nrfx/soc/nrfx_atomic.c
 )
 
@@ -255,7 +254,7 @@ elseif(NRF_PLATFORM STREQUAL "nrf52833")
     )
     target_sources(nordicsemi-nrf52833-radio-driver
         PRIVATE
-            ${RADIO_DRIVER_SOURCES}
+	#${RADIO_DRIVER_SOURCES}
             ${RADIO_DRIVER_SINGLE_PHY_SOURCES}
     )
     target_link_libraries(nordicsemi-nrf52833-radio-driver PRIVATE ot-config)
@@ -281,7 +280,7 @@ elseif(NRF_PLATFORM STREQUAL "nrf52833")
     )
     target_sources(nordicsemi-nrf52833-radio-driver-softdevice
         PRIVATE
-            ${RADIO_DRIVER_SOURCES}
+	#${RADIO_DRIVER_SOURCES}
             ${RADIO_DRIVER_SINGLE_PHY_SOURCES}
     )
     target_link_libraries(nordicsemi-nrf52833-radio-driver-softdevice PRIVATE ot-config)
@@ -305,7 +304,7 @@ elseif(NRF_PLATFORM STREQUAL "nrf52840")
         PRIVATE
             ${COMMON_SOURCES}
             ${USB_SOURCES}
-            nrfx/mdk/gcc_startup_nrf52840.S
+	    #nrfx/mdk/gcc_startup_nrf52840.S
             nrfx/mdk/system_nrf52840.c
     )
     target_link_libraries(nordicsemi-nrf52840-sdk PRIVATE ot-config)
@@ -328,7 +327,7 @@ elseif(NRF_PLATFORM STREQUAL "nrf52840")
     )
     target_sources(nordicsemi-nrf52840-radio-driver
         PRIVATE
-            ${RADIO_DRIVER_SOURCES}
+	#${RADIO_DRIVER_SOURCES}
             ${RADIO_DRIVER_SINGLE_PHY_SOURCES}
     )
     target_link_libraries(nordicsemi-nrf52840-radio-driver PRIVATE ot-config)
@@ -354,7 +353,7 @@ elseif(NRF_PLATFORM STREQUAL "nrf52840")
     )
     target_sources(nordicsemi-nrf52840-radio-driver-softdevice
         PRIVATE
-            ${RADIO_DRIVER_SOURCES}
+	#${RADIO_DRIVER_SOURCES}
             ${RADIO_DRIVER_SINGLE_PHY_SOURCES}
     )
     target_link_libraries(nordicsemi-nrf52840-radio-driver-softdevice PRIVATE ot-config)
