@@ -55,7 +55,11 @@ target_include_directories(jlinkrtt PRIVATE
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/cmsis
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/config
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/config/${NRF_PLATFORM}/config
-    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/dependencies
+    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/components/libraries/experimental_section_vars
+    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/components/libraries/log
+    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/components/libraries/strerror
+    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/components/libraries/util
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/libraries/app_error
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/mdk
+    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/softdevice/s140/headers
 )
