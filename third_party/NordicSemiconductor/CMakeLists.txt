@@ -59,6 +59,7 @@ set(EXAMPLE_INCLUDES
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/hal
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/drivers
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/drivers/include
+    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/legacy
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/mdk
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/soc
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/softdevice/s140/headers
