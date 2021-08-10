@@ -35,11 +35,12 @@ POSSIBILITY OF SUCH DAMAGE.
 
 /* MDK version */
 #define MDK_MAJOR_VERSION   8 
-#define MDK_MINOR_VERSION   27 
-#define MDK_MICRO_VERSION   0 
+#define MDK_MINOR_VERSION   30 
+#define MDK_MICRO_VERSION   2 
 
 /* Define NRF51_SERIES for common use in nRF51 series devices. Only if not previously defined. */
-#if defined (NRF51422_XXAA) ||\
+#if defined (NRF51) ||\
+    defined (NRF51422_XXAA) ||\
     defined (NRF51422_XXAB) ||\
     defined (NRF51422_XXAC) ||\
     defined (NRF51801_XXAB) ||\
@@ -70,21 +71,39 @@ POSSIBILITY OF SUCH DAMAGE.
     #endif
 #endif
 
+/* Define NRF53_SERIES for common use in nRF53 series devices. */
+#if defined (NRF5340_XXAA_APPLICATION) || defined (NRF5340_XXAA_NETWORK)
+    #ifndef NRF53_SERIES
+        #define NRF53_SERIES
+    #endif
+#endif
+
 /* Define NRF91_SERIES for common use in nRF91 series devices. */
 #if defined (NRF9160_XXAA)
     #ifndef NRF91_SERIES    
         #define NRF91_SERIES
     #endif
 #endif
-
-
-#if defined(_WIN32)
-    /* Do not include nrf specific files when building for PC host */
-#elif defined(__unix)
-    /* Do not include nrf specific files when building for PC host */
-#elif defined(__APPLE__)
-    /* Do not include nrf specific files when building for PC host */
-#else
+   
+/* Define coprocessor domains */
+#if defined (NRF5340_XXAA_APPLICATION)
+    #ifndef NRF_APPLICATION
+        #define NRF_APPLICATION
+    #endif
+#endif
+#if defined (NRF5340_XXAA_NETWORK)
+    #ifndef NRF_NETWORK
+        #define NRF_NETWORK
+    #endif
+#endif
+   
+//#if defined(_WIN32)
+//    /* Do not include nrf specific files when building for PC host */
+//#elif defined(__unix)
+//    /* Do not include nrf specific files when building for PC host */
+//#elif defined(__APPLE__)
+//    /* Do not include nrf specific files when building for PC host */
+//#else
 
     /* Device selection for device includes. */
     #if defined (NRF51)
@@ -126,6 +145,13 @@ POSSIBILITY OF SUCH DAMAGE.
         #include "nrf51_to_nrf52840.h"
         #include "nrf52_to_nrf52840.h"
     
+    #elif defined (NRF5340_XXAA_APPLICATION)
+        #include "nrf5340_application.h"
+        #include "nrf5340_application_bitfields.h"        
+    #elif defined (NRF5340_XXAA_NETWORK)
+        #include "nrf5340_network.h"
+        #include "nrf5340_network_bitfields.h"
+        
     #elif defined (NRF9160_XXAA)
         #include "nrf9160.h"
         #include "nrf9160_bitfields.h"
@@ -133,11 +159,11 @@ POSSIBILITY OF SUCH DAMAGE.
         
     #else
         #error "Device must be defined. See nrf.h."
-    #endif /* NRF51, NRF52805_XXAA, NRF52810_XXAA, NRF52811_XXAA, NRF52832_XXAA, NRF52832_XXAB, NRF52833_XXAA, NRF52840_XXAA, NRF9160_XXAA */
+    #endif /* NRF51, NRF52805_XXAA, NRF52810_XXAA, NRF52811_XXAA, NRF52832_XXAA, NRF52832_XXAB, NRF52833_XXAA, NRF52840_XXAA, NRF5340_XXAA_APPLICATION, NRF5340_XXAA_NETWORK, NRF9160_XXAA */
 
     #include "compiler_abstraction.h"
 
-#endif /* _WIN32 || __unix || __APPLE__ */
+//#endif /* _WIN32 || __unix || __APPLE__ */
 
 #endif /* NRF_H */
 

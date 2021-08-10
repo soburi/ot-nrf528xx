@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 - 2019, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2020, Nordic Semiconductor ASA
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -46,6 +46,10 @@
     #include <soc/nrfx_irqs_nrf52840.h>
 #elif defined(NRF9160_XXAA)
     #include <soc/nrfx_irqs_nrf9160.h>
+#elif defined(NRF5340_XXAA_APPLICATION)
+    #include <soc/nrfx_irqs_nrf5340_application.h>
+#elif defined(NRF5340_XXAA_NETWORK)
+    #include <soc/nrfx_irqs_nrf5340_network.h>
 #else
     #error "Unknown device."
 #endif

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 - 2019, Nordic Semiconductor ASA
+ * Copyright (c) 2013 - 2020, Nordic Semiconductor ASA
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -123,7 +123,7 @@ typedef struct
 
 static spis_cb_t m_cb[NRFX_SPIS_ENABLED_COUNT];
 
-nrfx_err_t nrfx_spis_init(nrfx_spis_t  const * const p_instance,
+nrfx_err_t nrfx_spis_init(nrfx_spis_t const *        p_instance,
                           nrfx_spis_config_t const * p_config,
                           nrfx_spis_event_handler_t  event_handler,
                           void *                     p_context)
@@ -257,7 +257,7 @@ nrfx_err_t nrfx_spis_init(nrfx_spis_t  const * const p_instance,
     // [the GPIOTE driver may be already initialized at this point (by this
     //  driver when another SPIS instance is used, or by an application code),
     //  so just ignore the returned value]
-    (void)nrfx_gpiote_init();
+    (void)nrfx_gpiote_init(NRFX_GPIOTE_DEFAULT_CONFIG_IRQ_PRIORITY);
     static nrfx_gpiote_in_config_t const csn_gpiote_config =
         NRFX_GPIOTE_CONFIG_IN_SENSE_HITOLO(true);
     nrfx_err_t gpiote_err_code = nrfx_gpiote_in_init(p_config->csn_pin,
@@ -290,7 +290,7 @@ nrfx_err_t nrfx_spis_init(nrfx_spis_t  const * const p_instance,
 }
 
 
-void nrfx_spis_uninit(nrfx_spis_t const * const p_instance)
+void nrfx_spis_uninit(nrfx_spis_t const * p_instance)
 {
     spis_cb_t * p_cb = &m_cb[p_instance->drv_inst_idx];
     NRFX_ASSERT(p_cb->state != NRFX_DRV_STATE_UNINITIALIZED);
@@ -335,14 +335,12 @@ static void spis_state_entry_action_execute(NRF_SPIS_Type * p_spis,
 
         case SPIS_XFER_COMPLETED:
             event.evt_type  = NRFX_SPIS_XFER_DONE;
-            event.tx_buffer = nrf_spis_tx_buffer_get(p_spis, &event.tx_buffer_size);
-            event.rx_buffer = nrf_spis_rx_buffer_get(p_spis, &event.rx_buffer_size);
             event.rx_amount = nrf_spis_rx_amount_get(p_spis);
             event.tx_amount = nrf_spis_tx_amount_get(p_spis);
             NRFX_LOG_INFO("Transfer rx_len:%d.", event.rx_amount);
             NRFX_LOG_DEBUG("Rx data:");
-            NRFX_LOG_HEXDUMP_DEBUG((uint8_t const *)event.rx_buffer,
-                                   event.rx_amount * sizeof(event.rx_buffer[0]));
+            NRFX_LOG_HEXDUMP_DEBUG((uint8_t const *)p_cb->rx_buffer,
+                                   event.rx_amount * sizeof(p_cb->rx_buffer[0]));
             NRFX_ASSERT(p_cb->handler != NULL);
             p_cb->handler(&event, p_cb->p_context);
             break;
@@ -367,11 +365,11 @@ static void spis_state_change(NRF_SPIS_Type   * p_spis,
     spis_state_entry_action_execute(p_spis, p_cb);
 }
 
-nrfx_err_t nrfx_spis_buffers_set(nrfx_spis_t const * const p_instance,
-                                 uint8_t           const * p_tx_buffer,
-                                 size_t                    tx_buffer_length,
-                                 uint8_t                 * p_rx_buffer,
-                                 size_t                    rx_buffer_length)
+nrfx_err_t nrfx_spis_buffers_set(nrfx_spis_t const * p_instance,
+                                 uint8_t const *     p_tx_buffer,
+                                 size_t              tx_buffer_length,
+                                 uint8_t *           p_rx_buffer,
+                                 size_t              rx_buffer_length)
 {
     NRFX_ASSERT(p_tx_buffer != NULL || tx_buffer_length == 0);
     NRFX_ASSERT(p_rx_buffer != NULL || rx_buffer_length == 0);
@@ -430,41 +428,8 @@ static void spis_irq_handler(NRF_SPIS_Type * p_spis, spis_cb_t * p_cb)
 {
     // @note: as multiple events can be pending for processing, the correct event processing order
     // is as follows:
-    // - SPI transaction complete event.
     // - SPI semaphore acquired event.
-
-    // Check for SPI transaction complete event.
-    if (nrf_spis_event_check(p_spis, NRF_SPIS_EVENT_END))
-    {
-        nrfx_spis_evt_t event;
-        nrf_spis_event_clear(p_spis, NRF_SPIS_EVENT_END);
-        NRFX_LOG_DEBUG("SPIS: Event: %s.", EVT_TO_STR(NRF_SPIS_EVENT_END));
-
-        switch (p_cb->spi_state)
-        {
-            case SPIS_BUFFER_RESOURCE_CONFIGURED:
-                spis_state_change(p_spis, p_cb, SPIS_XFER_COMPLETED);
-                break;
-
-            case SPIS_BUFFER_RESOURCE_REQUESTED:
-                event.evt_type  = NRFX_SPIS_XFER_DONE;
-                event.tx_buffer = nrf_spis_tx_buffer_get(p_spis, &event.tx_buffer_size);
-                event.rx_buffer = nrf_spis_rx_buffer_get(p_spis, &event.rx_buffer_size);
-                event.rx_amount = nrf_spis_rx_amount_get(p_spis);
-                event.tx_amount = nrf_spis_tx_amount_get(p_spis);
-                NRFX_LOG_INFO("Transfer rx_len:%d.", event.rx_amount);
-                NRFX_LOG_DEBUG("Rx data:");
-                NRFX_LOG_HEXDUMP_DEBUG((uint8_t const *)event.rx_buffer,
-                                       event.rx_amount * sizeof(event.rx_buffer[0]));
-                NRFX_ASSERT(p_cb->handler != NULL);
-                p_cb->handler(&event, p_cb->p_context);
-                break;
-
-            default:
-                // No implementation required.
-                break;
-        }
-    }
+    // - SPI transaction complete event.
 
     // Check for SPI semaphore acquired event.
     if (nrf_spis_event_check(p_spis, NRF_SPIS_EVENT_ACQUIRED))
@@ -481,6 +446,24 @@ static void spis_irq_handler(NRF_SPIS_Type * p_spis, spis_cb_t * p_cb)
                 nrf_spis_task_trigger(p_spis, NRF_SPIS_TASK_RELEASE);
 
                 spis_state_change(p_spis, p_cb, SPIS_BUFFER_RESOURCE_CONFIGURED);
+                break;
+
+            default:
+                // No implementation required.
+                break;
+        }
+    }
+
+    // Check for SPI transaction complete event.
+    if (nrf_spis_event_check(p_spis, NRF_SPIS_EVENT_END))
+    {
+        nrf_spis_event_clear(p_spis, NRF_SPIS_EVENT_END);
+        NRFX_LOG_DEBUG("SPIS: Event: %s.", EVT_TO_STR(NRF_SPIS_EVENT_END));
+
+        switch (p_cb->spi_state)
+        {
+            case SPIS_BUFFER_RESOURCE_CONFIGURED:
+                spis_state_change(p_spis, p_cb, SPIS_XFER_COMPLETED);
                 break;
 
             default:
