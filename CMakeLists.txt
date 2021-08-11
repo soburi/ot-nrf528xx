@@ -61,6 +61,7 @@ function(nrfxlib_calculate_lib_path lib_path)
 	set(${lib_path} "lib/nRF52840/hard-float" PARENT_SCOPE)
 endfunction()
 
+set(SL_OPENSOURCE 1)
 
 add_subdirectory(src)
 add_subdirectory(third_party)
