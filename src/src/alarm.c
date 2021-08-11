@@ -241,7 +241,7 @@ static uint32_t GetOverflowCounter(void)
     else
     {
         // Failed to acquire mutex.
-        if (nrf_rtc_event_pending(RTC_INSTANCE, NRF_RTC_EVENT_OVERFLOW) || (sOverflowCounter & 0x01))
+        if (nrf_rtc_event_check(RTC_INSTANCE, NRF_RTC_EVENT_OVERFLOW) || (sOverflowCounter & 0x01))
         {
             // Lower priority context is currently incrementing sOverflowCounter variable.
             overflowCounter = (sOverflowCounter + 2) / 2;
@@ -666,7 +666,7 @@ uint32_t nrf_802154_lp_timer_sync_time_get(void)
 void RTC_IRQ_HANDLER(void)
 {
     // Handle overflow.
-    if (nrf_rtc_event_pending(RTC_INSTANCE, NRF_RTC_EVENT_OVERFLOW))
+    if (nrf_rtc_event_check(RTC_INSTANCE, NRF_RTC_EVENT_OVERFLOW))
     {
         // Disable OVERFLOW interrupt to prevent lock-up in interrupt context while mutex is locked from lower priority
         // context and OVERFLOW event flag is stil up. OVERFLOW interrupt will be re-enabled when mutex is released -
