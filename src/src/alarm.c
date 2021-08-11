@@ -315,9 +315,9 @@ static void HandleCompareMatch(AlarmIndex aIndex, bool aSkipCheck)
 
         switch (aIndex)
         {
-        case k802154Timer:
-            nrf_802154_lp_timer_fired();
-            break;
+//        case k802154Timer:
+//            nrf_802154_lp_timer_fired();
+//            break;
 
         case k802154Sync:
             nrf_802154_lp_timer_synchronized();
