@@ -129,7 +129,7 @@ static void generatorStop(void)
 
 void RNG_IRQHandler(void)
 {
-    if (nrf_rng_event_get(NRF_RNG, NRF_RNG_EVENT_VALRDY) && nrf_rng_int_get(NRF_RNG, NRF_RNG_INT_VALRDY_MASK))
+    if (nrf_rng_event_check(NRF_RNG, NRF_RNG_EVENT_VALRDY) && nrf_rng_int_enable_check(NRF_RNG, NRF_RNG_INT_VALRDY_MASK))
     {
         nrf_rng_event_clear(NRF_RNG, NRF_RNG_EVENT_VALRDY);
 
