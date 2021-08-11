@@ -86,7 +86,6 @@ if(NRF_PLATFORM STREQUAL "nrf52811")
 elseif(NRF_PLATFORM STREQUAL "nrf52833")
     set(NRF52833_3RD_LIBS
         nordicsemi-nrf52833-radio-driver
-        nordicsemi-nrf52833-radio-driver-softdevice
         nordicsemi-nrf52833-sdk
 	nrf-802154-driver
         jlinkrtt
@@ -95,7 +94,6 @@ elseif(NRF_PLATFORM STREQUAL "nrf52833")
 elseif(NRF_PLATFORM STREQUAL "nrf52840")
     set(NRF52840_3RD_LIBS
         nordicsemi-nrf52840-radio-driver
-        nordicsemi-nrf52840-radio-driver-softdevice
         nordicsemi-nrf52840-sdk
 	nrf-802154-driver
 	nrf-802154-sl

@@ -90,6 +90,7 @@ else ()
       src/nrf_802154_notification_swi.c
       src/nrf_802154_priority_drop_swi.c
       src/nrf_802154_request_swi.c
+      src/fal/nrf_802154_fal.c
   )
 endif ()
 

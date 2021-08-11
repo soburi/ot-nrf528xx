@@ -99,57 +99,6 @@ set(USB_SOURCES
     nrfx/drivers/src/nrfx_usbd.c
 )
 
-set(RADIO_DRIVER_SOURCES
-    drivers/radio/fal/nrf_802154_fal.c
-    drivers/radio/mac_features/ack_generator/nrf_802154_ack_data.c
-    drivers/radio/mac_features/ack_generator/nrf_802154_ack_generator.c
-    drivers/radio/mac_features/ack_generator/nrf_802154_enh_ack_generator.c
-    drivers/radio/mac_features/ack_generator/nrf_802154_imm_ack_generator.c
-    drivers/radio/mac_features/nrf_802154_csma_ca.c
-    drivers/radio/mac_features/nrf_802154_delayed_trx.c
-    drivers/radio/mac_features/nrf_802154_filter.c
-    drivers/radio/mac_features/nrf_802154_frame_parser.c
-    drivers/radio/mac_features/nrf_802154_precise_ack_timeout.c
-    drivers/radio/fem/three_pin_gpio/nrf_fem_three_pin_gpio.c
-    drivers/radio/nrf_802154_core_hooks.c
-    drivers/radio/nrf_802154_core.c
-    drivers/radio/nrf_802154_critical_section.c
-    drivers/radio/nrf_802154_debug.c
-    drivers/radio/nrf_802154_pib.c
-    drivers/radio/nrf_802154_rssi.c
-    drivers/radio/nrf_802154_rx_buffer.c
-    drivers/radio/nrf_802154_timer_coord.c
-    drivers/radio/nrf_802154.c
-    drivers/radio/platform/coex/nrf_802154_wifi_coex_none.c
-    drivers/radio/platform/clock/nrf_802154_clock_ot.c
-    drivers/radio/platform/hp_timer/nrf_802154_hp_timer.c
-    drivers/radio/rsch/nrf_802154_rsch_crit_sect.c
-    drivers/radio/rsch/nrf_802154_rsch.c
-    drivers/radio/timer_scheduler/nrf_802154_timer_sched.c
-)
-
-set(SINGLE_PHY_SOURCES
-    drivers/radio/nrf_802154_notification_direct.c
-    drivers/radio/nrf_802154_priority_drop_direct.c
-    drivers/radio/nrf_802154_request_direct.c
-    drivers/radio/rsch/raal/single_phy/single_phy.c
-)
-
-set(RADIO_DRIVER_SOFTDEVICE_SOURCES
-    drivers/radio/nrf_802154_notification_swi.c
-    drivers/radio/nrf_802154_priority_drop_swi.c
-    drivers/radio/nrf_802154_request_swi.c
-    drivers/radio/nrf_802154_swi.c
-    drivers/radio/rsch/raal/softdevice/nrf_raal_softdevice.c
-)
-
-set(RADIO_DRIVER_SINGLE_PHY_SOURCES
-    drivers/radio/nrf_802154_notification_direct.c
-    drivers/radio/nrf_802154_priority_drop_direct.c
-    drivers/radio/nrf_802154_request_direct.c
-    drivers/radio/rsch/raal/single_phy/single_phy.c
-)
-
 if(NRF_PLATFORM STREQUAL "nrf52811")
     add_library(nordicsemi-nrf52811-sdk)
     target_compile_definitions(nordicsemi-nrf52811-sdk
@@ -197,10 +146,8 @@ if(NRF_PLATFORM STREQUAL "nrf52811")
     target_sources(nordicsemi-nrf52811-radio-driver
         PRIVATE
 	empty.c
-	#${RADIO_DRIVER_SOURCES}
-	#${RADIO_DRIVER_SINGLE_PHY_SOURCES}
     )
-    target_link_libraries(nordicsemi-nrf52811-radio-driver PRIVATE ot-config)
+    target_link_libraries(nordicsemi-nrf52811-radio-driver PRIVATE ot-config nrf-802154-driver nrf-802154-sl)
 elseif(NRF_PLATFORM STREQUAL "nrf52833")
     add_library(nordicsemi-nrf52833-sdk)
     target_compile_definitions(nordicsemi-nrf52833-sdk
@@ -224,7 +171,7 @@ elseif(NRF_PLATFORM STREQUAL "nrf52833")
             nrfx/mdk/gcc_startup_nrf52833.S
             nrfx/mdk/system_nrf52833.c
     )
-    target_link_libraries(nordicsemi-nrf52833-sdk PRIVATE ot-config)
+    target_link_libraries(nordicsemi-nrf52833-sdk PRIVATE ot-config nrf-802154-driver nrf-802154-sl)
 
     add_library(nordicsemi-nrf52833-radio-driver)
     target_compile_definitions(nordicsemi-nrf52833-radio-driver
@@ -245,10 +192,8 @@ elseif(NRF_PLATFORM STREQUAL "nrf52833")
     target_sources(nordicsemi-nrf52833-radio-driver
         PRIVATE
 	empty.c
-	#${RADIO_DRIVER_SOURCES}
-	#${RADIO_DRIVER_SINGLE_PHY_SOURCES}
     )
-    target_link_libraries(nordicsemi-nrf52833-radio-driver PRIVATE ot-config)
+    target_link_libraries(nordicsemi-nrf52833-radio-driver PRIVATE ot-config nrf-802154-driver nrf-802154-sl)
 
     add_library(nordicsemi-nrf52833-radio-driver-softdevice)
     target_compile_definitions(nordicsemi-nrf52833-radio-driver-softdevice
@@ -272,10 +217,8 @@ elseif(NRF_PLATFORM STREQUAL "nrf52833")
     target_sources(nordicsemi-nrf52833-radio-driver-softdevice
         PRIVATE
 	empty.c
-	#${RADIO_DRIVER_SOURCES}
-	#${RADIO_DRIVER_SINGLE_PHY_SOURCES}
     )
-    target_link_libraries(nordicsemi-nrf52833-radio-driver-softdevice PRIVATE ot-config)
+    target_link_libraries(nordicsemi-nrf52833-radio-driver-softdevice PRIVATE ot-config nrf-802154-driver nrf-802154-sl)
 elseif(NRF_PLATFORM STREQUAL "nrf52840")
     add_library(nordicsemi-nrf52840-sdk)
     target_compile_definitions(nordicsemi-nrf52840-sdk
@@ -296,7 +239,7 @@ elseif(NRF_PLATFORM STREQUAL "nrf52840")
         PRIVATE
             ${COMMON_SOURCES}
             ${USB_SOURCES}
-	    #nrfx/mdk/gcc_startup_nrf52840.S
+	    nrfx/mdk/gcc_startup_nrf52840.S
             nrfx/mdk/system_nrf52840.c
     )
     target_link_libraries(nordicsemi-nrf52840-sdk PRIVATE ot-config)
@@ -320,10 +263,8 @@ elseif(NRF_PLATFORM STREQUAL "nrf52840")
     target_sources(nordicsemi-nrf52840-radio-driver
         PRIVATE
 	empty.c
-	#${RADIO_DRIVER_SOURCES}
-	#${RADIO_DRIVER_SINGLE_PHY_SOURCES}
     )
-    target_link_libraries(nordicsemi-nrf52840-radio-driver PRIVATE ot-config)
+    target_link_libraries(nordicsemi-nrf52840-radio-driver PRIVATE ot-config nrf-802154-driver nrf-802154-sl)
 
     add_library(nordicsemi-nrf52840-radio-driver-softdevice)
     target_compile_definitions(nordicsemi-nrf52840-radio-driver-softdevice
@@ -347,10 +288,8 @@ elseif(NRF_PLATFORM STREQUAL "nrf52840")
     target_sources(nordicsemi-nrf52840-radio-driver-softdevice
         PRIVATE
 	empty.c
-	#${RADIO_DRIVER_SOURCES}
-	#${RADIO_DRIVER_SINGLE_PHY_SOURCES}
     )
-    target_link_libraries(nordicsemi-nrf52840-radio-driver-softdevice PRIVATE ot-config)
+    target_link_libraries(nordicsemi-nrf52840-radio-driver-softdevice PRIVATE ot-config nrf-802154-driver nrf-802154-sl nrf-802154-platform)
 else()
     message(FATAL_ERROR "Platform unknown: ${NRF_PLATFORM}")
 endif()
@@ -372,42 +311,42 @@ target_link_libraries(nordicsemi-mbedtls
         ${CMAKE_CURRENT_SOURCE_DIR}/libraries/nrf_security/lib/libnrf_cc310_platform_0.9.4.a
 )
 
-add_library(nrf-802154-platform)
-
-target_compile_definitions(nrf-802154-platform
-    PUBLIC
-        -DNRF52840_XXAA
-)
-
-target_include_directories(nrf-802154-platform
-    PUBLIC
-        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/config/nrf52840/config
-        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor
-        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/cmsis
-        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/config
-        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/components/libraries/experimental_section_vars
-        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/components/libraries/log
-        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/components/libraries/strerror
-        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/components/libraries/util
-        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/drivers/clock
-        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/drivers/common
-        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/drivers/power
-        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/drivers/systick
-        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/drivers/usbd
-        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx
-        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/hal
-        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/drivers
-        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/drivers/include
-        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/legacy
-        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/mdk
-        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/soc
-        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/softdevice/s140/headers
-        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/softdevice/s140/headers/nrf52
-)
-
-target_sources(nrf-802154-platform
-    PRIVATE
-        empty.c
-)
+#add_library(nrf-802154-platform)
+#
+#target_compile_definitions(nrf-802154-platform
+#    PUBLIC
+#        -DNRF52840_XXAA
+#)
+#
+#target_include_directories(nrf-802154-platform
+#    PUBLIC
+#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/config/nrf52840/config
+#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor
+#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/cmsis
+#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/config
+#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/components/libraries/experimental_section_vars
+#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/components/libraries/log
+#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/components/libraries/strerror
+##        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/components/libraries/util
+#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/drivers/clock
+#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/drivers/common
+#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/drivers/power
+#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/drivers/systick
+#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/drivers/usbd
+#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx
+#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/hal
+#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/drivers
+#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/drivers/include
+#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/legacy
+#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/mdk
+#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/soc
+#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/softdevice/s140/headers
+#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/softdevice/s140/headers/nrf52
+#)
+#
+#target_sources(nrf-802154-platform
+#    PRIVATE
+#        empty.c
+#)
 
 add_subdirectory(sdk-nrfxlib)
