@@ -503,7 +503,7 @@ otError otPlatRadioReceiveAt(otInstance *aInstance, uint8_t aChannel, uint32_t a
     bool result;
 
     nrf_802154_tx_power_set(GetTransmitPowerForChannel(aChannel));
-    result = nrf_802154_receive_at(aStart - SAFE_DELTA, SAFE_DELTA, aDuration, aChannel);
+    //result = nrf_802154_receive_at(aStart - SAFE_DELTA, SAFE_DELTA, aDuration, aChannel);
     clearPendingEvents();
 
     return result ? OT_ERROR_NONE : OT_ERROR_FAILED;
@@ -1046,7 +1046,7 @@ void nrf_802154_received_timestamp_raw(uint8_t *p_data, int8_t power, uint8_t lq
     otSysEventSignalPending();
 }
 
-void nrf_802154_receive_failed(nrf_802154_rx_error_t error)
+void nrf_802154_receive_failed(nrf_802154_rx_error_t error, uint32_t id)
 {
     switch (error)
     {
@@ -1104,16 +1104,13 @@ static uint16_t getCslPhase()
 }
 #endif
 
-void nrf_802154_tx_ack_started(uint8_t *p_data, int8_t power, uint8_t lqi)
+void nrf_802154_tx_ack_started(const uint8_t *p_data)
 {
     otRadioFrame ackFrame;
 #if OPENTHREAD_CONFIG_MLE_LINK_METRICS_ENABLE
     uint8_t      linkMetricsDataLen = 0;
     uint8_t      linkMetricsData[OT_ENH_PROBING_IE_DATA_MAX_SIZE];
     otMacAddress macAddress;
-#else
-    OT_UNUSED_VARIABLE(power);
-    OT_UNUSED_VARIABLE(lqi);
 #endif
 
     OT_UNUSED_VARIABLE(ackFrame);

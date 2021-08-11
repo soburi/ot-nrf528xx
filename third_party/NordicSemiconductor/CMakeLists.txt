@@ -30,16 +30,22 @@ set(COMMON_INCLUDES
     ${PROJECT_SOURCE_DIR}/openthread/include
     ${PROJECT_SOURCE_DIR}/openthread/src
     ${PROJECT_SOURCE_DIR}/openthread/src/core
-    ${CMAKE_CURRENT_SOURCE_DIR}/drivers/radio
-    ${CMAKE_CURRENT_SOURCE_DIR}/drivers/radio/fem
-    ${CMAKE_CURRENT_SOURCE_DIR}/drivers/radio/fem/three_pin_gpio
-    ${CMAKE_CURRENT_SOURCE_DIR}/drivers/radio/mac_features
-    ${CMAKE_CURRENT_SOURCE_DIR}/drivers/radio/mac_features/ack_generator
-    ${CMAKE_CURRENT_SOURCE_DIR}/drivers/radio/platform/temperature
-    ${CMAKE_CURRENT_SOURCE_DIR}/drivers/radio/platform/lp_timer
-    ${CMAKE_CURRENT_SOURCE_DIR}/drivers/radio/rsch
-    ${CMAKE_CURRENT_SOURCE_DIR}/drivers/radio/rsch/raal
-    ${CMAKE_CURRENT_SOURCE_DIR}/drivers/radio/rsch/raal/softdevice
+    ${CMAKE_CURRENT_SOURCE_DIR}/sdk-nrfxlib/nrf_802154/driver/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/sdk-nrfxlib/nrf_802154/driver/include/platform
+    ${CMAKE_CURRENT_SOURCE_DIR}/sdk-nrfxlib/nrf_802154/driver/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/sdk-nrfxlib/nrf_802154/driver/src/fal
+    ${CMAKE_CURRENT_SOURCE_DIR}/sdk-nrfxlib/nrf_802154/driver/src/mac_features
+    ${CMAKE_CURRENT_SOURCE_DIR}/sdk-nrfxlib/nrf_802154/driver/src/mac_features/ack_generator
+    ${CMAKE_CURRENT_SOURCE_DIR}/sdk-nrfxlib/nrf_802154/serialization/include/host
+    ${CMAKE_CURRENT_SOURCE_DIR}/sdk-nrfxlib/nrf_802154/serialization/include/platform
+    ${CMAKE_CURRENT_SOURCE_DIR}/sdk-nrfxlib/nrf_802154/serialization/include/serialization
+    ${CMAKE_CURRENT_SOURCE_DIR}/sdk-nrfxlib/nrf_802154/serialization/spinel_base
+    ${CMAKE_CURRENT_SOURCE_DIR}/sdk-nrfxlib/nrf_802154/serialization/src/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/sdk-nrfxlib/nrf_802154/sl/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/sdk-nrfxlib/nrf_802154/sl/include/platform
+    ${CMAKE_CURRENT_SOURCE_DIR}/sdk-nrfxlib/nrf_802154/sl/include/rsch
+    ${CMAKE_CURRENT_SOURCE_DIR}/sdk-nrfxlib/nrf_802154/sl/include/timer
+    ${CMAKE_CURRENT_SOURCE_DIR}/sdk-nrfxlib/nrf_802154/sl/sl_opensource/include
 )
 
 set(EXAMPLE_INCLUDES
@@ -190,8 +196,9 @@ if(NRF_PLATFORM STREQUAL "nrf52811")
     )
     target_sources(nordicsemi-nrf52811-radio-driver
         PRIVATE
-            ${RADIO_DRIVER_SOURCES}
-            ${RADIO_DRIVER_SINGLE_PHY_SOURCES}
+	empty.c
+	#${RADIO_DRIVER_SOURCES}
+	#${RADIO_DRIVER_SINGLE_PHY_SOURCES}
     )
     target_link_libraries(nordicsemi-nrf52811-radio-driver PRIVATE ot-config)
 elseif(NRF_PLATFORM STREQUAL "nrf52833")
@@ -237,8 +244,9 @@ elseif(NRF_PLATFORM STREQUAL "nrf52833")
     )
     target_sources(nordicsemi-nrf52833-radio-driver
         PRIVATE
+	empty.c
 	#${RADIO_DRIVER_SOURCES}
-            ${RADIO_DRIVER_SINGLE_PHY_SOURCES}
+	#${RADIO_DRIVER_SINGLE_PHY_SOURCES}
     )
     target_link_libraries(nordicsemi-nrf52833-radio-driver PRIVATE ot-config)
 
@@ -263,8 +271,9 @@ elseif(NRF_PLATFORM STREQUAL "nrf52833")
     )
     target_sources(nordicsemi-nrf52833-radio-driver-softdevice
         PRIVATE
+	empty.c
 	#${RADIO_DRIVER_SOURCES}
-            ${RADIO_DRIVER_SINGLE_PHY_SOURCES}
+	#${RADIO_DRIVER_SINGLE_PHY_SOURCES}
     )
     target_link_libraries(nordicsemi-nrf52833-radio-driver-softdevice PRIVATE ot-config)
 elseif(NRF_PLATFORM STREQUAL "nrf52840")
@@ -310,8 +319,9 @@ elseif(NRF_PLATFORM STREQUAL "nrf52840")
     )
     target_sources(nordicsemi-nrf52840-radio-driver
         PRIVATE
+	empty.c
 	#${RADIO_DRIVER_SOURCES}
-            ${RADIO_DRIVER_SINGLE_PHY_SOURCES}
+	#${RADIO_DRIVER_SINGLE_PHY_SOURCES}
     )
     target_link_libraries(nordicsemi-nrf52840-radio-driver PRIVATE ot-config)
 
@@ -336,8 +346,9 @@ elseif(NRF_PLATFORM STREQUAL "nrf52840")
     )
     target_sources(nordicsemi-nrf52840-radio-driver-softdevice
         PRIVATE
+	empty.c
 	#${RADIO_DRIVER_SOURCES}
-            ${RADIO_DRIVER_SINGLE_PHY_SOURCES}
+	#${RADIO_DRIVER_SINGLE_PHY_SOURCES}
     )
     target_link_libraries(nordicsemi-nrf52840-radio-driver-softdevice PRIVATE ot-config)
 else()
