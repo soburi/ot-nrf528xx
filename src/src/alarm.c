@@ -204,7 +204,7 @@ static uint32_t GetOverflowCounter(void)
         bool increasing = false;
 
         // Check if interrupt was handled already.
-        if (nrf_rtc_event_pending(RTC_INSTANCE, NRF_RTC_EVENT_OVERFLOW))
+        if (nrf_rtc_event_check(RTC_INSTANCE, NRF_RTC_EVENT_OVERFLOW))
         {
             sOverflowCounter++;
             increasing = true;
@@ -615,7 +615,7 @@ void nrf_802154_lp_timer_start(uint32_t t0, uint32_t dt)
 
 bool nrf_802154_lp_timer_is_running(void)
 {
-    return nrf_rtc_int_is_enabled(RTC_INSTANCE, sChannelData[k802154Timer].mCompareInt);
+    return nrf_rtc_int_enable_check(RTC_INSTANCE, sChannelData[k802154Timer].mCompareInt);
 }
 
 void nrf_802154_lp_timer_stop(void)
@@ -680,8 +680,8 @@ void RTC_IRQ_HANDLER(void)
     // Handle compare match.
     for (uint32_t i = 0; i < kNumTimers; i++)
     {
-        if (nrf_rtc_int_is_enabled(RTC_INSTANCE, sChannelData[i].mCompareInt) &&
-            nrf_rtc_event_pending(RTC_INSTANCE, sChannelData[i].mCompareEvent))
+        if (nrf_rtc_int_enable_check(RTC_INSTANCE, sChannelData[i].mCompareInt) &&
+            nrf_rtc_event_check(RTC_INSTANCE, sChannelData[i].mCompareEvent))
         {
             HandleCompareMatch((AlarmIndex)i, false);
         }
