@@ -57,5 +57,10 @@ target_include_directories(ot-config INTERFACE
     ${PROJECT_SOURCE_DIR}/src/${NRF_PLATFORM}
 )
 
+function(nrfxlib_calculate_lib_path lib_path)
+	set(${lib_path} "lib/nRF52840/hard-float" PARENT_SCOPE)
+endfunction()
+
+
 add_subdirectory(src)
 add_subdirectory(third_party)

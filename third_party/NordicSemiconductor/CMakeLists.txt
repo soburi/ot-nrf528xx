@@ -374,6 +374,11 @@ target_link_libraries(nordicsemi-mbedtls
 
 add_library(nrf-802154-platform)
 
+target_compile_definitions(nrf-802154-platform
+    PUBLIC
+        -DNRF52840_XXAA
+)
+
 target_sources(nrf-802154-platform
     PRIVATE
         empty.c

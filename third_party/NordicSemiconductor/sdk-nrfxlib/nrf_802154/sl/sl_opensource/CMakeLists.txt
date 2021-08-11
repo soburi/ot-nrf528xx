@@ -42,12 +42,6 @@ target_link_libraries(nrf-802154-sl
     nrf-802154-platform
 )
 
-target_compile_definitions(nrf-802154-sl
-  PRIVATE
-    -DNRF52840_XXAA
-)
-
-
 target_include_directories(nrf-802154-sl
   PUBLIC
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/config/nrf52840/config

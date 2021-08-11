@@ -32,10 +32,10 @@
 #
 #
 
-target_include_directories(nrf-802154-driver-interface INTERFACE include)
+target_include_directories(nrf-802154-driver-interface INTERFACE include sl_opensource/include)
 
-#if (SL_OPENSOURCE)
-add_subdirectory(sl_opensource)
-#elseif (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/sl/CMakeLists.txt)
-#  add_subdirectory(sl)
-#endif ()
+if (SL_OPENSOURCE)
+  add_subdirectory(sl_opensource)
+elseif (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/sl/CMakeLists.txt)
+  add_subdirectory(sl)
+endif ()
