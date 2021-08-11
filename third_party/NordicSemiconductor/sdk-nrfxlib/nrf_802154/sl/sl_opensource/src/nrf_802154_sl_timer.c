@@ -37,15 +37,15 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-#include <kernel.h>
+//#include <kernel.h>
 #include <assert.h>
 
 #include "timer/nrf_802154_timer_coord.h"
 #include "timer/nrf_802154_timer_sched.h"
 
-static void timeout_handler(struct k_timer * timer_id);
+//static void timeout_handler(struct k_timer * timer_id);
 
-K_TIMER_DEFINE(timer, timeout_handler, NULL);
+//K_TIMER_DEFINE(timer, timeout_handler, NULL);
 
 void nrf_802154_timer_coord_init(void)
 {
@@ -69,7 +69,7 @@ void nrf_802154_timer_coord_stop(void)
 
 void nrf_802154_timer_sched_init(void)
 {
-    BUILD_ASSERT(CONFIG_SYS_CLOCK_TICKS_PER_SEC == NRF_802154_SL_RTC_FREQUENCY);
+    //BUILD_ASSERT(CONFIG_SYS_CLOCK_TICKS_PER_SEC == NRF_802154_SL_RTC_FREQUENCY);
 }
 
 void nrf_802154_timer_sched_deinit(void)
@@ -90,12 +90,13 @@ void nrf_802154_timer_sched_add(nrf_802154_timer_t * p_timer, bool round_up)
     uint32_t now    = nrf_802154_timer_sched_time_get();
     uint32_t target = p_timer->t0 + p_timer->dt - now;
 
-    k_timer_user_data_set(&timer, (void *)p_timer->callback); // Passing arguments is not supported.
-    k_timer_start(&timer, K_USEC(target), K_NO_WAIT);
+    //k_timer_user_data_set(&timer, (void *)p_timer->callback); // Passing arguments is not supported.
+    //k_timer_start(&timer, K_USEC(target), K_NO_WAIT);
 }
 
 void nrf_802154_timer_sched_remove(nrf_802154_timer_t * p_timer, bool * p_was_running)
 {
+#if 0
     if (k_timer_status_get(&timer) > 0)
     {
         /* Timer has expired. */
@@ -115,12 +116,13 @@ void nrf_802154_timer_sched_remove(nrf_802154_timer_t * p_timer, bool * p_was_ru
     else
     {
         /* Timer is still running. */
-        k_timer_stop(&timer);
+        //k_timer_stop(&timer);
         if (p_was_running)
         {
             *p_was_running = true;
         }
     }
+#endif
 }
 
 bool nrf_802154_timer_sched_time_is_in_future(uint32_t now, uint32_t t0, uint32_t dt)
@@ -130,7 +132,7 @@ bool nrf_802154_timer_sched_time_is_in_future(uint32_t now, uint32_t t0, uint32_
     (void)dt;
     return false;
 }
-
+/*
 static void timeout_handler(struct k_timer * timer_id)
 {
     nrf_802154_timer_callback_t callback =
@@ -138,11 +140,11 @@ static void timeout_handler(struct k_timer * timer_id)
 
     callback(NULL); // Passing arguments is not supported.
 }
-
+*/
 bool nrf_802154_timer_sched_is_running(nrf_802154_timer_t * p_timer)
 {
     (void)p_timer;
-    return k_timer_status_get(&timer) < 0;
+//    return k_timer_status_get(&timer) < 0;
 }
 
 void nrf_802154_lp_timer_init(void)
