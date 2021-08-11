@@ -67,6 +67,10 @@ void nrf_802154_timer_coord_stop(void)
     // Intentionally empty
 }
 
+void nrf_802154_timer_coord_timestamp_prepare(uint32_t event_addr)
+{
+}
+
 void nrf_802154_timer_sched_init(void)
 {
     //BUILD_ASSERT(CONFIG_SYS_CLOCK_TICKS_PER_SEC == NRF_802154_SL_RTC_FREQUENCY);
