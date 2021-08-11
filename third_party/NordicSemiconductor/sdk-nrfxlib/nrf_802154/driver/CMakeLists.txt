@@ -41,6 +41,12 @@ target_include_directories(nrf-802154-driver
     src
 )
 
+target_compile_definitions(nrf-802154-driver
+  PRIVATE
+    -DNRF52840_XXAA
+)
+
+
 target_sources(nrf-802154-driver
   PRIVATE
     src/nrf_802154.c
@@ -110,6 +116,5 @@ endif()
 target_link_libraries(nrf-802154-driver
   PUBLIC
     nrf-802154-driver-interface
-    nrf-802154-platform
     nrf-802154-sl
 )

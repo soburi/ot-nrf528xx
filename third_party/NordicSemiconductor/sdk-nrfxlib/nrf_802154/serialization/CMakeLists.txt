@@ -78,5 +78,4 @@ endif()
 target_link_libraries(nrf-802154-serialization
   PRIVATE
     nrf-802154-serialization-interface
-    nrf-802154-platform
 )
