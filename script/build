@@ -163,6 +163,7 @@ main()
             local_options+=("-DCMAKE_TOOLCHAIN_FILE=src/${platform}/arm-none-eabi.cmake")
             case "${nrf_build_type}" in
                 UART_trans)
+                    OT_CMAKE_NINJA_TARGET=("ot-cli-ftd" "ot-cli-mtd")
                     options+=("${local_options[@]}" "-DOT_EXTERNAL_MBEDTLS=nordicsemi-mbedtls")
                     ;;
                 USB_trans)
