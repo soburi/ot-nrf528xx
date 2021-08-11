@@ -39,6 +39,7 @@ add_library(nrf-802154-sl STATIC EXCLUDE_FROM_ALL)
 target_link_libraries(nrf-802154-sl
   PRIVATE
     nrf-802154-driver-interface
+    nrf-802154-platform
 )
 
 target_compile_definitions(nrf-802154-sl

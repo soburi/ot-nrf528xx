@@ -116,5 +116,6 @@ endif()
 target_link_libraries(nrf-802154-driver
   PUBLIC
     nrf-802154-driver-interface
+    nrf-802154-platform
     nrf-802154-sl
 )

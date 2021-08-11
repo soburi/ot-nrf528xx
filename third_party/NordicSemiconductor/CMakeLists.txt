@@ -372,4 +372,11 @@ target_link_libraries(nordicsemi-mbedtls
         ${CMAKE_CURRENT_SOURCE_DIR}/libraries/nrf_security/lib/libnrf_cc310_platform_0.9.4.a
 )
 
+add_library(nrf-802154-platform)
+
+target_sources(nrf-802154-platform
+    PRIVATE
+        empty.c
+)
+
 add_subdirectory(sdk-nrfxlib)
