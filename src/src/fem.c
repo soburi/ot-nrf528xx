@@ -159,7 +159,7 @@ typedef struct
 
 void PlatformFemSetConfigParams(const PlatformFemConfigParams *aConfig)
 {
-/*
+/* TODO
     nrf_fem_interface_config_t cfg;
 
     memset(&cfg, 0, sizeof(cfg));
