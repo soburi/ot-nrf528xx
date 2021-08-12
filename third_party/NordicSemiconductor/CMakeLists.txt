@@ -56,7 +56,7 @@ set(EXAMPLE_INCLUDES
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/components/libraries/log
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/components/libraries/strerror
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/components/libraries/util
-    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/dependendies/legacy
+    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/dependencies/legacy
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/drivers/clock
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/hal
