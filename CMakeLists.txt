@@ -57,13 +57,18 @@ target_include_directories(ot-config INTERFACE
     ${PROJECT_SOURCE_DIR}/src/${NRF_PLATFORM}
 )
 
+function(add_subdirectory_ifdef feature_toggle source_dir)
+  if(${${feature_toggle}})
+    add_subdirectory(${source_dir} ${ARGN})
+  endif()
+endfunction()
+
 function(nrfxlib_calculate_lib_path lib_path)
 	set(${lib_path} "lib/nRF52840/hard-float" PARENT_SCOPE)
 endfunction()
 
+set(CONFIG_NRF802154_DRIVER 1)
 set(SL_OPENSOURCE 1)
 
 add_subdirectory(src)
 add_subdirectory(third_party)
-
-add_subdirectory(third_party/NordicSemiconductor/sdk-nrfxlib/nrf_802154)

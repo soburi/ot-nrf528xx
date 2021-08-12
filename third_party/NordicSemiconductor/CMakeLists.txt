@@ -344,3 +344,5 @@ target_link_libraries(nordicsemi-mbedtls
 #    PRIVATE
 #        empty.c
 #)
+
+add_subdirectory(sdk-nrfxlib)
