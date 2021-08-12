@@ -57,6 +57,19 @@ target_include_directories(ot-config INTERFACE
     ${PROJECT_SOURCE_DIR}/src/${NRF_PLATFORM}
 )
 
+# https://cmake.org/cmake/help/latest/command/target_include_directories.html
+function(zephyr_include_directories)
+  foreach(arg ${ARGV})
+    if(IS_ABSOLUTE ${arg})
+      set(path ${arg})
+    else()
+      set(path ${CMAKE_CURRENT_SOURCE_DIR}/${arg})
+    endif()
+    target_include_directories(ot-config INTERFACE ${path})
+  endforeach()
+endfunction()
+
+
 function(add_subdirectory_ifdef feature_toggle source_dir)
   if(${${feature_toggle}})
     add_subdirectory(${source_dir} ${ARGN})
@@ -67,7 +80,15 @@ function(nrfxlib_calculate_lib_path lib_path)
 	set(${lib_path} "lib/nRF52840/hard-float" PARENT_SCOPE)
 endfunction()
 
+function(assert cond msg)
+endfunction()
+
+function(zephyr_link_libraries)
+	target_include_directories(ot-config INTERFACE ${ARGV})
+endfunction()
+
 set(CONFIG_NRF802154_DRIVER 1)
+set(CONFIG_MPSL 1)
 set(SL_OPENSOURCE 1)
 
 add_subdirectory(src)
