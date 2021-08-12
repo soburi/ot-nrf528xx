@@ -21,7 +21,7 @@ NOTICE: This file has been modified by Nordic Semiconductor ASA.
 */
 
     .syntax unified
-    .arch armv7e-m
+    .arch armv6-m
 
 #ifdef __STARTUP_CONFIG
 #include "startup_config.h"
@@ -39,7 +39,7 @@ NOTICE: This file has been modified by Nordic Semiconductor ASA.
     .equ    Stack_Size, __STACK_SIZE
 #else
     .align 3
-    .equ    Stack_Size, 8192
+    .equ    Stack_Size, 2048
 #endif
     .globl __StackTop
     .globl __StackLimit
@@ -56,7 +56,7 @@ __StackTop:
 #elif defined(__HEAP_SIZE)
     .equ Heap_Size, __HEAP_SIZE
 #else
-    .equ Heap_Size, 8192
+    .equ Heap_Size, 2048
 #endif
     .globl __HeapBase
     .globl __HeapLimit
@@ -76,15 +76,15 @@ __isr_vector:
     .long   Reset_Handler
     .long   NMI_Handler
     .long   HardFault_Handler
-    .long   MemoryManagement_Handler
-    .long   BusFault_Handler
-    .long   UsageFault_Handler
+    .long   0                           /*Reserved */
+    .long   0                           /*Reserved */
+    .long   0                           /*Reserved */
     .long   0                           /*Reserved */
     .long   0                           /*Reserved */
     .long   0                           /*Reserved */
     .long   0                           /*Reserved */
     .long   SVC_Handler
-    .long   DebugMon_Handler
+    .long   0                           /*Reserved */
     .long   0                           /*Reserved */
     .long   PendSV_Handler
     .long   SysTick_Handler
@@ -92,12 +92,12 @@ __isr_vector:
   /* External Interrupts */
     .long   POWER_CLOCK_IRQHandler
     .long   RADIO_IRQHandler
-    .long   UARTE0_UART0_IRQHandler
-    .long   SPIM0_SPIS0_TWIM0_TWIS0_SPI0_TWI0_IRQHandler
-    .long   SPIM1_SPIS1_TWIM1_TWIS1_SPI1_TWI1_IRQHandler
-    .long   NFCT_IRQHandler
+    .long   UART0_IRQHandler
+    .long   SPI0_TWI0_IRQHandler
+    .long   SPI1_TWI1_IRQHandler
+    .long   0                           /*Reserved */
     .long   GPIOTE_IRQHandler
-    .long   SAADC_IRQHandler
+    .long   ADC_IRQHandler
     .long   TIMER0_IRQHandler
     .long   TIMER1_IRQHandler
     .long   TIMER2_IRQHandler
@@ -109,93 +109,13 @@ __isr_vector:
     .long   WDT_IRQHandler
     .long   RTC1_IRQHandler
     .long   QDEC_IRQHandler
-    .long   COMP_LPCOMP_IRQHandler
-    .long   SWI0_EGU0_IRQHandler
-    .long   SWI1_EGU1_IRQHandler
-    .long   SWI2_EGU2_IRQHandler
-    .long   SWI3_EGU3_IRQHandler
-    .long   SWI4_EGU4_IRQHandler
-    .long   SWI5_EGU5_IRQHandler
-    .long   TIMER3_IRQHandler
-    .long   TIMER4_IRQHandler
-    .long   PWM0_IRQHandler
-    .long   PDM_IRQHandler
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   MWU_IRQHandler
-    .long   PWM1_IRQHandler
-    .long   PWM2_IRQHandler
-    .long   SPIM2_SPIS2_SPI2_IRQHandler
-    .long   RTC2_IRQHandler
-    .long   I2S_IRQHandler
-    .long   FPU_IRQHandler
-    .long   USBD_IRQHandler
-    .long   UARTE1_IRQHandler
-    .long   QSPI_IRQHandler
-    .long   CRYPTOCELL_IRQHandler
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   PWM3_IRQHandler
-    .long   0                           /*Reserved */
-    .long   SPIM3_IRQHandler
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
+    .long   LPCOMP_IRQHandler
+    .long   SWI0_IRQHandler
+    .long   SWI1_IRQHandler
+    .long   SWI2_IRQHandler
+    .long   SWI3_IRQHandler
+    .long   SWI4_IRQHandler
+    .long   SWI5_IRQHandler
     .long   0                           /*Reserved */
     .long   0                           /*Reserved */
     .long   0                           /*Reserved */
@@ -207,6 +127,9 @@ __isr_vector:
 
 /* Reset Handler */
 
+    .equ    NRF_POWER_RAMON_ADDRESS,             0x40000524
+    .equ    NRF_POWER_RAMONB_ADDRESS,            0x40000554
+    .equ    NRF_POWER_RAMONx_RAMxON_ONMODE_Msk,  0x3
 
     .text
     .thumb
@@ -216,6 +139,17 @@ __isr_vector:
     .type Reset_Handler, %function
 Reset_Handler:
 
+    MOVS    R1, #NRF_POWER_RAMONx_RAMxON_ONMODE_Msk
+    
+    LDR     R0, =NRF_POWER_RAMON_ADDRESS
+    LDR     R2, [R0]
+    ORRS    R2, R1
+    STR     R2, [R0]
+
+    LDR     R0, =NRF_POWER_RAMONB_ADDRESS
+    LDR     R2, [R0]
+    ORRS    R2, R1
+    STR     R2, [R0]
 
 /* Loop to copy data from read only memory to RAM.
  * The ranges of copy from/to are specified by following symbols:
@@ -301,39 +235,11 @@ HardFault_Handler:
     .size   HardFault_Handler, . - HardFault_Handler
 
 
-    .weak   MemoryManagement_Handler
-    .type   MemoryManagement_Handler, %function
-MemoryManagement_Handler:
-    b       .
-    .size   MemoryManagement_Handler, . - MemoryManagement_Handler
-
-
-    .weak   BusFault_Handler
-    .type   BusFault_Handler, %function
-BusFault_Handler:
-    b       .
-    .size   BusFault_Handler, . - BusFault_Handler
-
-
-    .weak   UsageFault_Handler
-    .type   UsageFault_Handler, %function
-UsageFault_Handler:
-    b       .
-    .size   UsageFault_Handler, . - UsageFault_Handler
-
-
     .weak   SVC_Handler
     .type   SVC_Handler, %function
 SVC_Handler:
     b       .
     .size   SVC_Handler, . - SVC_Handler
-
-
-    .weak   DebugMon_Handler
-    .type   DebugMon_Handler, %function
-DebugMon_Handler:
-    b       .
-    .size   DebugMon_Handler, . - DebugMon_Handler
 
 
     .weak   PendSV_Handler
@@ -365,12 +271,11 @@ Default_Handler:
 
     IRQ  POWER_CLOCK_IRQHandler
     IRQ  RADIO_IRQHandler
-    IRQ  UARTE0_UART0_IRQHandler
-    IRQ  SPIM0_SPIS0_TWIM0_TWIS0_SPI0_TWI0_IRQHandler
-    IRQ  SPIM1_SPIS1_TWIM1_TWIS1_SPI1_TWI1_IRQHandler
-    IRQ  NFCT_IRQHandler
+    IRQ  UART0_IRQHandler
+    IRQ  SPI0_TWI0_IRQHandler
+    IRQ  SPI1_TWI1_IRQHandler
     IRQ  GPIOTE_IRQHandler
-    IRQ  SAADC_IRQHandler
+    IRQ  ADC_IRQHandler
     IRQ  TIMER0_IRQHandler
     IRQ  TIMER1_IRQHandler
     IRQ  TIMER2_IRQHandler
@@ -382,29 +287,12 @@ Default_Handler:
     IRQ  WDT_IRQHandler
     IRQ  RTC1_IRQHandler
     IRQ  QDEC_IRQHandler
-    IRQ  COMP_LPCOMP_IRQHandler
-    IRQ  SWI0_EGU0_IRQHandler
-    IRQ  SWI1_EGU1_IRQHandler
-    IRQ  SWI2_EGU2_IRQHandler
-    IRQ  SWI3_EGU3_IRQHandler
-    IRQ  SWI4_EGU4_IRQHandler
-    IRQ  SWI5_EGU5_IRQHandler
-    IRQ  TIMER3_IRQHandler
-    IRQ  TIMER4_IRQHandler
-    IRQ  PWM0_IRQHandler
-    IRQ  PDM_IRQHandler
-    IRQ  MWU_IRQHandler
-    IRQ  PWM1_IRQHandler
-    IRQ  PWM2_IRQHandler
-    IRQ  SPIM2_SPIS2_SPI2_IRQHandler
-    IRQ  RTC2_IRQHandler
-    IRQ  I2S_IRQHandler
-    IRQ  FPU_IRQHandler
-    IRQ  USBD_IRQHandler
-    IRQ  UARTE1_IRQHandler
-    IRQ  QSPI_IRQHandler
-    IRQ  CRYPTOCELL_IRQHandler
-    IRQ  PWM3_IRQHandler
-    IRQ  SPIM3_IRQHandler
+    IRQ  LPCOMP_IRQHandler
+    IRQ  SWI0_IRQHandler
+    IRQ  SWI1_IRQHandler
+    IRQ  SWI2_IRQHandler
+    IRQ  SWI3_IRQHandler
+    IRQ  SWI4_IRQHandler
+    IRQ  SWI5_IRQHandler
 
   .end
