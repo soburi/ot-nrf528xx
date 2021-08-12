@@ -197,6 +197,17 @@ otError otPlatUartEnable(void)
 {
     otError error = OT_ERROR_NONE;
 
+    nrf_uarte_config_t uart_config = {
+        .hwfc = NRF_UARTE_HWFC_DISABLED,
+	.parity = NRF_UARTE_PARITY_EXCLUDED,
+#if defined(UARTE_CONFIG_STOP_Msk) || defined(__NRFX_DOXYGEN__)
+	.stop = NRF_UARTE_STOP_ONE,
+#endif
+#if defined(UARTE_CONFIG_PARITYTYPE_Msk) || defined(__NRFX_DOXYGEN__)
+	.paritytype = NRF_UARTE_PARITYTYPE_EVEN,
+#endif
+    };
+
     otEXPECT_ACTION(sUartEnabled == false, error = OT_ERROR_ALREADY);
 
     // Set up TX and RX pins.
@@ -212,10 +223,9 @@ otError otPlatUartEnable(void)
     nrf_gpio_cfg_output(UART_PIN_RTS);
     nrf_uarte_hwfc_pins_set(UART_INSTANCE, UART_PIN_RTS, UART_PIN_CTS);
 
-//    nrf_uarte_configure(UART_INSTANCE, UART_PARITY, NRF_UARTE_HWFC_ENABLED);
-#else
-//    nrf_uarte_configure(UART_INSTANCE, UART_PARITY, NRF_UARTE_HWFC_DISABLED);
+    uart_config.hwfc = NRF_UARTE_HWFC_ENABLED;
 #endif
+    nrf_uarte_configure(UART_INSTANCE, &uart_config);
 
     // Configure baudrate.
     nrf_uarte_baudrate_set(UART_INSTANCE, UART_BAUDRATE);
