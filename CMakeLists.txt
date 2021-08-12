@@ -65,3 +65,5 @@ set(SL_OPENSOURCE 1)
 
 add_subdirectory(src)
 add_subdirectory(third_party)
+
+add_subdirectory(third_party/NordicSemiconductor/sdk-nrfxlib/nrf_802154)

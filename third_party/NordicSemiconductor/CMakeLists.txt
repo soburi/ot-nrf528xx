@@ -56,16 +56,12 @@ set(EXAMPLE_INCLUDES
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/components/libraries/log
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/components/libraries/strerror
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/components/libraries/util
+    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/dependendies/legacy
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/drivers/clock
-    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/drivers/common
-    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/drivers/power
-    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/drivers/systick
-    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/drivers/usbd
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/hal
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/drivers
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/drivers/include
-    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/legacy
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/mdk
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/soc
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/softdevice/s140/headers
@@ -84,7 +80,7 @@ set(COMMON_FLAG
 
 set(COMMON_SOURCES
     components/libraries/util/app_util_platform.c
-    nrfx/legacy/nrf_drv_clock.c
+    drivers/clock/nrf_drv_clock.c
     components/libraries/util/app_error.c
     components/libraries/util/app_error_handler_gcc.c
     nrfx/drivers/src/nrfx_clock.c
@@ -348,5 +344,3 @@ target_link_libraries(nordicsemi-mbedtls
 #    PRIVATE
 #        empty.c
 #)
-
-add_subdirectory(sdk-nrfxlib)
