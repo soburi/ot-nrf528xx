@@ -84,12 +84,15 @@ function(assert cond msg)
 endfunction()
 
 function(zephyr_link_libraries)
-	target_include_directories(ot-config INTERFACE ${ARGV})
+	target_link_libraries(ot-config INTERFACE ${ARGV})
 endfunction()
 
 set(CONFIG_NRF802154_DRIVER 1)
 set(CONFIG_MPSL 1)
-set(SL_OPENSOURCE 1)
+set(CONFIG_SOC nRF52840_XXAA)
+set(CONFIG_FPU 1)
+set(CONFIG_FP_HARDABI 1)
+set(GCC_M_CPU cortex-m4)
 
 add_subdirectory(src)
 add_subdirectory(third_party)
