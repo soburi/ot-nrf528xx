@@ -100,7 +100,7 @@ if (SL_OPENSOURCE OR NRF53_SERIES)
       # Disable Frame Timestamps
       NRF_802154_FRAME_TIMESTAMP_ENABLED=0
       # Disable DTRX
-      NRF_802154_DELAYED_TRX_ENABLED=0
+      NRF_802154_DELAYED_TRX_ENABLED=1
       # Disable IFS
       NRF_802154_IFS_ENABLED=0
       # Disable IE writer

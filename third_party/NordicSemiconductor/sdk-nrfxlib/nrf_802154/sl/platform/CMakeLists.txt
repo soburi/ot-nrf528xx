@@ -77,10 +77,10 @@ target_sources(nrf-802154-platform
     gpiote/nrf_802154_gpiote_none.c
     gpiote/nrf_802154_gpiote_crit_sect.c
     clock/nrf_802154_clock.c
+    #    clock/nrf_802154_clock_mpsl.c
     lp_timer/nrf_802154_lp_timer.c
     lp_timer/nrf_802154_lp_timer_none.c
     hp_timer/nrf_802154_hp_timer.c
     irq/nrf_802154_irq_baremetal.c
 )
-    #    clock/nrf_802154_clock_mpsl.c
 

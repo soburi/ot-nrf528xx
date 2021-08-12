@@ -41,7 +41,7 @@ set(NRF_COMM_SOURCES
     src/alarm.c
     src/diag.c
     src/entropy.c
-    #    src/fem.c
+    src/fem.c
     src/flash.c
     src/logging.c
     src/misc.c

@@ -571,7 +571,7 @@ void otPlatAlarmMicroStop(otInstance *aInstance)
 
     AlarmStop(kUsTimer);
 }
-
+#if 0
 /**
  * Radio driver timer abstraction API
  */
@@ -687,7 +687,7 @@ void RTC_IRQ_HANDLER(void)
         }
     }
 }
-
+#endif
 uint64_t otPlatTimeGet(void)
 {
     return nrf5AlarmGetCurrentTime();

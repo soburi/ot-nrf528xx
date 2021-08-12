@@ -253,7 +253,7 @@ static inline void clearPendingEvents(void)
 }
 
 #if OPENTHREAD_CONFIG_THREAD_VERSION >= OT_THREAD_VERSION_1_2
-static void txAckProcessSecurity(uint8_t *aAckFrame)
+static void txAckProcessSecurity(const uint8_t *aAckFrame)
 {
     otRadioFrame     ackFrame;
     struct otMacKey *key = NULL;
@@ -503,7 +503,7 @@ otError otPlatRadioReceiveAt(otInstance *aInstance, uint8_t aChannel, uint32_t a
     bool result;
 
     nrf_802154_tx_power_set(GetTransmitPowerForChannel(aChannel));
-    //result = nrf_802154_receive_at(aStart - SAFE_DELTA, SAFE_DELTA, aDuration, aChannel);
+    result = nrf_802154_receive_at(aStart - SAFE_DELTA, SAFE_DELTA, aDuration, aChannel, 0);
     clearPendingEvents();
 
     return result ? OT_ERROR_NONE : OT_ERROR_FAILED;

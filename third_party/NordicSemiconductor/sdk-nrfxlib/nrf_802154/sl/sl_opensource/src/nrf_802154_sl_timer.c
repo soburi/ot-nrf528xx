@@ -83,7 +83,7 @@ void nrf_802154_timer_sched_deinit(void)
 
 uint32_t nrf_802154_timer_sched_time_get(void)
 {
-    return NRF_802154_SL_RTC_TICKS_TO_US(k_uptime_ticks());
+    //return NRF_802154_SL_RTC_TICKS_TO_US(k_uptime_ticks());
 }
 
 void nrf_802154_timer_sched_add(nrf_802154_timer_t * p_timer, bool round_up)
@@ -149,24 +149,4 @@ bool nrf_802154_timer_sched_is_running(nrf_802154_timer_t * p_timer)
 {
     (void)p_timer;
 //    return k_timer_status_get(&timer) < 0;
-}
-
-void nrf_802154_lp_timer_init(void)
-{
-    // Intentionally empty
-}
-
-void nrf_802154_lp_timer_deinit(void)
-{
-    // Intentionally empty
-}
-
-void nrf_802154_lp_timer_critical_section_enter(void)
-{
-    // Intentionally empty
-}
-
-void nrf_802154_lp_timer_critical_section_exit(void)
-{
-    // Intentionally empty
 }

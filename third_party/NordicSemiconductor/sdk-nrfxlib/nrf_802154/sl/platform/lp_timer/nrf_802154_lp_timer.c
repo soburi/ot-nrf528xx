@@ -286,7 +286,7 @@ static void handle_compare_match(bool skip_check)
         nrf_rtc_event_disable(NRF_802154_RTC_INSTANCE, m_cmp_ch[LP_TIMER_CHANNEL].event_mask);
         nrf_rtc_int_disable(NRF_802154_RTC_INSTANCE, m_cmp_ch[LP_TIMER_CHANNEL].int_mask);
 
-        nrf_802154_lp_timer_fired();
+        //nrf_802154_lp_timer_fired();
     }
 }
 
