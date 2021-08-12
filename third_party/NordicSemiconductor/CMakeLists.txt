@@ -308,3 +308,4 @@ target_link_libraries(nordicsemi-mbedtls
 )
 
 add_subdirectory(sdk-nrfxlib)
+add_subdirectory(sdk-nrfxlib/nrf_802154)
