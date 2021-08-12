@@ -27,6 +27,8 @@
 #
 
 cmake_minimum_required(VERSION 3.10.2)
+cmake_policy(SET CMP0079 OLD)
+
 project(ot-nrf528xx VERSION 0.2.0)
 
 set(NRF_PLATFORM_VALUES
