@@ -307,42 +307,4 @@ target_link_libraries(nordicsemi-mbedtls
         ${CMAKE_CURRENT_SOURCE_DIR}/libraries/nrf_security/lib/libnrf_cc310_platform_0.9.4.a
 )
 
-#add_library(nrf-802154-platform)
-#
-#target_compile_definitions(nrf-802154-platform
-#    PUBLIC
-#        -DNRF52840_XXAA
-#)
-#
-#target_include_directories(nrf-802154-platform
-#    PUBLIC
-#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/config/nrf52840/config
-#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor
-#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/cmsis
-#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/config
-#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/components/libraries/experimental_section_vars
-#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/components/libraries/log
-#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/components/libraries/strerror
-##        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/components/libraries/util
-#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/drivers/clock
-#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/drivers/common
-#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/drivers/power
-#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/drivers/systick
-#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/drivers/usbd
-#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx
-#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/hal
-#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/drivers
-#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/drivers/include
-#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/legacy
-#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/mdk
-#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/soc
-#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/softdevice/s140/headers
-#        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/softdevice/s140/headers/nrf52
-#)
-#
-#target_sources(nrf-802154-platform
-#    PRIVATE
-#        empty.c
-#)
-
 add_subdirectory(sdk-nrfxlib)
