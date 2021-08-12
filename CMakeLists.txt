@@ -67,6 +67,7 @@ function(nrfxlib_calculate_lib_path lib_path)
 	set(${lib_path} "lib/nRF52840/hard-float" PARENT_SCOPE)
 endfunction()
 
+#set_property(GLOBAL PROPERTY CONFIG_NRF802154_DRIVER)
 set(CONFIG_NRF802154_DRIVER 1)
 set(SL_OPENSOURCE 1)
 
