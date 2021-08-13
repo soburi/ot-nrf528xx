@@ -61,5 +61,5 @@ target_include_directories(jlinkrtt PRIVATE
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/components/libraries/util
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/libraries/app_error
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/mdk
-    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/softdevice/s140/headers
+    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/components/softdevice/s140/headers
 )

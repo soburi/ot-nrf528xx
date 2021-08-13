@@ -48,8 +48,8 @@ set(EXAMPLE_INCLUDES
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/drivers/include
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/mdk
     ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/soc
-    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/softdevice/s140/headers
-    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/softdevice/s140/headers/nrf52
+    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/components/softdevice/s140/headers
+    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/components/softdevice/s140/headers/nrf52
 )
 
 set(COMMON_FLAG

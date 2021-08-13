@@ -64,8 +64,8 @@ target_include_directories(nrf-802154-platform
         ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/drivers/include
         ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/mdk
         ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/soc
-        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/softdevice/s140/headers
-        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/softdevice/s140/headers/nrf52
+	${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/components/softdevice/s140/headers
+        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/components/softdevice/s140/headers/nrf52
 	${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/sdk-nrfxlib/mpsl/include
 	${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/sdk-nrfxlib/nrf_802154/sl/include/platform
 	${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/sdk-nrfxlib/nrf_802154/driver/include/platform
