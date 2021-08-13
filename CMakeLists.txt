@@ -100,3 +100,5 @@ set(GCC_M_CPU cortex-m4)
 
 add_subdirectory(src)
 add_subdirectory(third_party)
+
+add_subdirectory(nrf_802154_sl_platform)
