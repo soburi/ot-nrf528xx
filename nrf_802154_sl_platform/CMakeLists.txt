@@ -49,6 +49,7 @@ target_include_directories(nrf-802154-platform
         ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/config
         ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/components/libraries/experimental_section_vars
         ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/components/libraries/log
+        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/components/libraries/log/src
         ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/components/libraries/strerror
         ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/components/libraries/util
         ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/drivers/clock
