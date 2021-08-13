@@ -1,3 +1,9 @@
 [submodule "openthread"]
 	path = openthread
 	url = https://github.com/openthread/openthread.git
+[submodule "third_party/NordicSemiconductor/sdk-nrfxlib"]
+	path = third_party/NordicSemiconductor/sdk-nrfxlib
+	url = https://github.com/nrfconnect/sdk-nrfxlib
+[submodule "third_party/NordicSemiconductor/nrfx"]
+	path = third_party/NordicSemiconductor/nrfx
+	url = https://github.com/NordicSemiconductor/nrfx
