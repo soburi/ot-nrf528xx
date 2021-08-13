@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2020, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -73,20 +73,6 @@ void app_error_handler_bare(ret_code_t error_code)
     app_error_fault_handler(NRF_FAULT_ID_SDK_ERROR, 0, (uint32_t)(&error_info));
 
     UNUSED_VARIABLE(error_info);
-}
-
-/**@brief Function for error handling, which is called when an error has occurred.
- *
- * @param[in] error_code  Error code supplied to the handler.
- * @param[in] line_num    Line number where the handler is called.
- * @param[in] p_file_name Pointer to the file name.
- */
-void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p_file_name)
-{
-    UNUSED_VARIABLE(line_num);
-    UNUSED_VARIABLE(p_file_name);
-
-    app_error_handler_bare(error_code);
 }
 
 void app_error_save_and_stop(uint32_t id, uint32_t pc, uint32_t info)

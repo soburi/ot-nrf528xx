@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2020, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -37,51 +37,50 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-#ifndef APP_ERROR_WEAK_H__
-#define APP_ERROR_WEAK_H__
+/** @file
+ * @brief Definition file for resource usage by SoftDevice, ESB and Gazell.
+ */
 
-#include <stdint.h>
+#ifndef SDK_RESOURCES_H__
+#define SDK_RESOURCES_H__
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-/** @file
- *
- * @defgroup app_error Common application error handler
- * @{
- * @ingroup app_common
- *
- * @brief Common application error handler.
- */
+#if defined(SOFTDEVICE_PRESENT) || defined (BLE_STACK_SUPPORT_REQD) || defined (ANT_STACK_SUPPORT_REQD)
+    #include "nrf_sd_def.h"
+#else
+    #define SD_PPI_RESTRICTED         0uL /**< 1 if PPI peripheral is restricted, 0 otherwise. */
+    #define SD_PPI_CHANNELS_USED      0uL /**< PPI channels utilized by SotfDevice (not available to th spplication). */
+    #define SD_PPI_GROUPS_USED        0uL /**< PPI groups utilized by SotfDevice (not available to th spplication). */
+    #define SD_TIMERS_USED            0uL /**< Timers used by SoftDevice. */
+    #define SD_SWI_USED               0uL /**< Software interrupts used by SoftDevice. */
+#endif
 
-/**@brief       Callback function for errors, asserts, and faults.
- *
- * @details     This function is called every time an error is raised in app_error, nrf_assert, or
- *              in the SoftDevice. Information about the error can be found in the @p info
- *              parameter.
- *
- *              See also @ref nrf_fault_handler_t for more details.
- *
- * @note        The function is implemented as weak so that it can be redefined by a custom error
- *              handler when needed.
- *
- * @param[in] id    Fault identifier. See @ref NRF_FAULT_IDS.
- * @param[in] pc    The program counter of the instruction that triggered the fault, or 0 if
- *                  unavailable.
- * @param[in] info  Optional additional information regarding the fault. The value of the @p id
- *                  parameter dictates how to interpret this parameter. Refer to the documentation
- *                  for each fault identifier (@ref NRF_FAULT_IDS and @ref APP_ERROR_FAULT_IDS) for
- *                  details about interpreting @p info.
- */
-void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info);
+#ifdef GAZELL_PRESENT
+    #include "nrf_gzll_resources.h"
+#else
+    #define GZLL_PPI_CHANNELS_USED    0uL /**< PPI channels utilized by Gazell (not available to th spplication). */
+    #define GZLL_TIMERS_USED          0uL /**< Timers used by Gazell. */
+    #define GZLL_SWI_USED             0uL /**< Software interrupts used by Gazell */
+#endif
 
+#ifdef ESB_PRESENT
+    #include "nrf_esb_resources.h"
+#else
+    #define ESB_PPI_CHANNELS_USED    0uL /**< PPI channels utilized by ESB (not available to th spplication). */
+    #define ESB_TIMERS_USED          0uL /**< Timers used by ESB. */
+    #define ESB_SWI_USED             0uL /**< Software interrupts used by ESB */
+#endif
 
-/** @} */
-
+#define NRF_PPI_CHANNELS_USED (SD_PPI_CHANNELS_USED | GZLL_PPI_CHANNELS_USED | ESB_PPI_CHANNELS_USED)
+#define NRF_PPI_GROUPS_USED   (SD_PPI_GROUPS_USED)
+#define NRF_SWI_USED          (SD_SWI_USED | GZLL_SWI_USED | ESB_SWI_USED)
+#define NRF_TIMERS_USED       (SD_TIMERS_USED | GZLL_TIMERS_USED | ESB_TIMERS_USED)
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // APP_ERROR_WEAK_H__
+#endif // SDK_RESOURCES_H__

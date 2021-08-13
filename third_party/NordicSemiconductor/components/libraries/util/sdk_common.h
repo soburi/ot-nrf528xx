@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013 - 2019, Nordic Semiconductor ASA
+ * Copyright (c) 2013 - 2020, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -40,30 +40,31 @@
 /** @cond */
 /**@file
  *
- * @defgroup sdk_os SDK OS Abstraction
  * @ingroup experimental_api
- * @details In order to made SDK modules independent of use of an embedded OS, and permit
- *          application with varied task architecture, SDK abstracts the OS specific
- *          elements here in order to make all other modules agnostic to the OS or task
- *          architecture.
+ * @defgroup sdk_common SDK Common Header
+ * @brief All common headers needed for SDK examples will be included here so that application
+ *       developer does not have to include headers on him/herself.
  * @{
  */
 
-#ifndef SDK_OS_H__
-#define SDK_OS_H__
+#ifndef SDK_COMMON_H__
+#define SDK_COMMON_H__
+
+#include <stdint.h>
+#include <stdbool.h>
+#include <string.h>
+#include "sdk_config.h"
+#include "nordic_common.h"
+#include "compiler_abstraction.h"
+#include "sdk_os.h"
+#include "sdk_errors.h"
+#include "app_util.h"
+#include "sdk_macros.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#define SDK_MUTEX_DEFINE(X)
-#define SDK_MUTEX_INIT(X)
-#define SDK_MUTEX_LOCK(X)
-#define SDK_MUTEX_UNLOCK(X)
-
-/**
- * @defgroup os_data_type Data types.
- */
 
 /** @} */
 /** @endcond */
@@ -72,5 +73,5 @@ extern "C" {
 }
 #endif
 
-#endif // SDK_OS_H__
+#endif // SDK_COMMON_H__
 
