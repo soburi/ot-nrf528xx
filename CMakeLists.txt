@@ -89,6 +89,8 @@ function(zephyr_link_libraries)
 	target_link_libraries(ot-config INTERFACE ${ARGV})
 endfunction()
 
+target_link_libraries(ot-config INTERFACE nrf-802154-platform)
+
 set(CONFIG_NRF802154_DRIVER 1)
 set(CONFIG_MPSL 1)
 set(CONFIG_SOC nRF52840_XXAA)
