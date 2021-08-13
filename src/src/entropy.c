@@ -116,24 +116,24 @@ static inline uint32_t bufferGetUint32()
 
 static void generatorStart(void)
 {
-    nrf_rng_event_clear(NRF_RNG_EVENT_VALRDY);
-    nrf_rng_int_enable(NRF_RNG_INT_VALRDY_MASK);
-    nrf_rng_task_trigger(NRF_RNG_TASK_START);
+    nrf_rng_event_clear(NRF_RNG, NRF_RNG_EVENT_VALRDY);
+    nrf_rng_int_enable(NRF_RNG, NRF_RNG_INT_VALRDY_MASK);
+    nrf_rng_task_trigger(NRF_RNG, NRF_RNG_TASK_START);
 }
 
 static void generatorStop(void)
 {
-    nrf_rng_int_disable(NRF_RNG_INT_VALRDY_MASK);
-    nrf_rng_task_trigger(NRF_RNG_TASK_STOP);
+    nrf_rng_int_disable(NRF_RNG, NRF_RNG_INT_VALRDY_MASK);
+    nrf_rng_task_trigger(NRF_RNG, NRF_RNG_TASK_STOP);
 }
 
 void RNG_IRQHandler(void)
 {
-    if (nrf_rng_event_get(NRF_RNG_EVENT_VALRDY) && nrf_rng_int_get(NRF_RNG_INT_VALRDY_MASK))
+    if (nrf_rng_event_check(NRF_RNG, NRF_RNG_EVENT_VALRDY) && nrf_rng_int_enable_check(NRF_RNG, NRF_RNG_INT_VALRDY_MASK))
     {
-        nrf_rng_event_clear(NRF_RNG_EVENT_VALRDY);
+        nrf_rng_event_clear(NRF_RNG, NRF_RNG_EVENT_VALRDY);
 
-        bufferPut(nrf_rng_random_value_get());
+        bufferPut(nrf_rng_random_value_get(NRF_RNG));
 
         if (bufferIsFull())
         {
@@ -165,8 +165,8 @@ void nrf5RandomInit(void)
     NVIC_ClearPendingIRQ(RNG_IRQn);
     NVIC_EnableIRQ(RNG_IRQn);
 
-    nrf_rng_error_correction_enable();
-    nrf_rng_shorts_disable(NRF_RNG_SHORT_VALRDY_STOP_MASK);
+    nrf_rng_error_correction_enable(NRF_RNG);
+    nrf_rng_shorts_disable(NRF_RNG, NRF_RNG_SHORT_VALRDY_STOP_MASK);
     generatorStart();
 
     // Wait for the first randomized 4 bytes, to randomize software generator seed.

@@ -159,10 +159,10 @@ typedef struct
 
 void PlatformFemSetConfigParams(const PlatformFemConfigParams *aConfig)
 {
+/* TODO
     nrf_fem_interface_config_t cfg;
 
     memset(&cfg, 0, sizeof(cfg));
-
     cfg.fem_config.pa_time_gap_us   = aConfig->mFemPhyCfg.mPaTimeGapUs;
     cfg.fem_config.lna_time_gap_us  = aConfig->mFemPhyCfg.mLnaTimeGapUs;
     cfg.fem_config.pdn_settle_us    = aConfig->mFemPhyCfg.mPdnSettleUs;
@@ -184,8 +184,8 @@ void PlatformFemSetConfigParams(const PlatformFemConfigParams *aConfig)
     cfg.ppi_ch_id_clr               = aConfig->mPpiChIdClr;
     cfg.ppi_ch_id_set               = aConfig->mPpiChIdSet;
     cfg.ppi_ch_id_pdn               = aConfig->mPpiChIdPdn;
-
-    nrf_fem_interface_configuration_set(&cfg);
+*/
+//    nrf_fem_interface_configuration_set(&cfg);
 }
 
 void nrf5FemInit(void)
