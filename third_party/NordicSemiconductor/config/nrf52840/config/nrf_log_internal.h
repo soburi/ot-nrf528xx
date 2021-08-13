@@ -1,30 +1,30 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
- * 
+ * Copyright (c) 2016 - 2020, Nordic Semiconductor ASA
+ *
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
- * 
+ *
  * 2. Redistributions in binary form, except as embedded into a Nordic
  *    Semiconductor ASA integrated circuit in a product or a software update for
  *    such product, must reproduce the above copyright notice, this list of
  *    conditions and the following disclaimer in the documentation and/or other
  *    materials provided with the distribution.
- * 
+ *
  * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
  *    contributors may be used to endorse or promote products derived from this
  *    software without specific prior written permission.
- * 
+ *
  * 4. This software, with or without modification, must only be used with a
  *    Nordic Semiconductor ASA integrated circuit.
- * 
+ *
  * 5. Any software provided in binary form under this license must not be reverse
  *    engineered, decompiled, modified and/or disassembled.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
  * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
  * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -35,7 +35,7 @@
  * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * 
+ *
  */
 #ifndef NRF_LOG_INTERNAL_H__
 #define NRF_LOG_INTERNAL_H__
@@ -47,6 +47,8 @@
 #include <stdbool.h>
 #include "nrf_log_instance.h"
 #include "nrf_log_types.h"
+
+//#include "common_func.h"
 
 #ifndef NRF_LOG_ERROR_COLOR
     #define NRF_LOG_ERROR_COLOR NRF_LOG_COLOR_DEFAULT
@@ -107,9 +109,27 @@
     #define NRF_LOG_INST_FILTER(p_inst) NRF_LOG_SEVERITY_DEBUG
 #endif
 
+/**
+ * @brief Macro for calculating module id based on address and section start address
+ */
+#define NRF_LOG_MODULE_ID_GET_CONST(addr) (((uint32_t)(addr) -                                     \
+                                   (uint32_t)NRF_SECTION_START_ADDR(log_const_data)) /             \
+                                    sizeof(nrf_log_module_const_data_t))
+/**
+ * @brief Macro for calculating module id based on address and section start address
+ */
+#define NRF_LOG_MODULE_ID_GET_DYNAMIC(addr) (((uint32_t)(addr) -                                   \
+                                   (uint32_t)NRF_SECTION_START_ADDR(log_dynamic_data)) /           \
+                                    sizeof(nrf_log_module_dynamic_data_t))
+
+
 #if NRF_LOG_ENABLED
-#define NRF_LOG_MODULE_ID        NRF_LOG_ITEM_DATA_DYNAMIC(NRF_LOG_MODULE_NAME).module_id
-#define NRF_LOG_INST_ID(p_inst)  (p_inst)->module_id
+#define NRF_LOG_MODULE_ID        NRF_LOG_MODULE_ID_GET_CONST(&NRF_LOG_ITEM_DATA_CONST(NRF_LOG_MODULE_NAME))
+#if NRF_LOG_FILTERS_ENABLED
+#define NRF_LOG_INST_ID(p_inst)  NRF_LOG_MODULE_ID_GET_DYNAMIC(p_inst)
+#else
+#define NRF_LOG_INST_ID(p_inst)  NRF_LOG_MODULE_ID
+#endif
 #else
 #define NRF_LOG_MODULE_ID       0
 #define NRF_LOG_INST_ID(p_inst) 0
@@ -122,24 +142,19 @@
 #if NRF_LOG_ENABLED
 #define NRF_LOG_INTERNAL_LOG_PUSH(_str) nrf_log_push(_str)
 #define LOG_INTERNAL_0(type, str) \
-    nrf_log_frontend_std_0(type, str)
+    PRINTF(str)
 #define LOG_INTERNAL_1(type, str, arg0) \
-    /*lint -save -e571*/nrf_log_frontend_std_1(type, str, (uint32_t)(arg0))/*lint -restore*/
+    PRINTF(str, arg0)
 #define LOG_INTERNAL_2(type, str, arg0, arg1) \
-    /*lint -save -e571*/nrf_log_frontend_std_2(type, str, (uint32_t)(arg0), \
-            (uint32_t)(arg1))/*lint -restore*/
+    PRINTF(str, arg0, arg1)
 #define LOG_INTERNAL_3(type, str, arg0, arg1, arg2) \
-    /*lint -save -e571*/nrf_log_frontend_std_3(type, str, (uint32_t)(arg0), \
-            (uint32_t)(arg1), (uint32_t)(arg2))/*lint -restore*/
+    PRINTF(str, arg0, arg1, arg2)
 #define LOG_INTERNAL_4(type, str, arg0, arg1, arg2, arg3) \
-    /*lint -save -e571*/nrf_log_frontend_std_4(type, str, (uint32_t)(arg0), \
-            (uint32_t)(arg1), (uint32_t)(arg2), (uint32_t)(arg3))/*lint -restore*/
+    PRINTF(str, arg0, arg1, arg2, arg3)
 #define LOG_INTERNAL_5(type, str, arg0, arg1, arg2, arg3, arg4) \
-    /*lint -save -e571*/nrf_log_frontend_std_5(type, str, (uint32_t)(arg0), \
-            (uint32_t)(arg1), (uint32_t)(arg2), (uint32_t)(arg3), (uint32_t)(arg4))/*lint -restore*/
+    PRINTF(str, arg0, arg1, arg2, arg3, arg4)
 #define LOG_INTERNAL_6(type, str, arg0, arg1, arg2, arg3, arg4, arg5) \
-    /*lint -save -e571*/nrf_log_frontend_std_6(type, str, (uint32_t)(arg0), \
-            (uint32_t)(arg1), (uint32_t)(arg2), (uint32_t)(arg3), (uint32_t)(arg4), (uint32_t)(arg5))/*lint -restore*/
+    PRINTF(str, arg0, arg1, arg2, arg3, arg4, arg5)
 
 
 #else //NRF_LOG_ENABLED
@@ -235,7 +250,7 @@
         NRF_LOG_INTERNAL_HEXDUMP_INST(NRF_LOG_SEVERITY_WARNING, NRF_LOG_SEVERITY_WARNING, p_inst, p_data, len)
 
 #define NRF_LOG_INTERNAL_HEXDUMP_WARNING(p_data, len) \
-        NRF_LOG_INTERNAL_HEXDUMP_(NRF_LOG_SEVERITY_WARNING, NRF_LOG_SEVERITY_WARNING, p_data, len)
+        NRF_LOG_INTERNAL_HEXDUMP_MODULE(NRF_LOG_SEVERITY_WARNING, NRF_LOG_SEVERITY_WARNING, p_data, len)
 
 #define NRF_LOG_INTERNAL_INST_INFO(p_inst, ...) \
         NRF_LOG_INTERNAL_INST(NRF_LOG_SEVERITY_INFO, NRF_LOG_SEVERITY_INFO, p_inst, __VA_ARGS__)
@@ -289,11 +304,12 @@
 #define NRF_LOG_INTERNAL_MODULE_REGISTER() /*lint -save -e19*/ /*lint -restore*/
 #endif
 
-extern NRF_LOG_DYNAMIC_STRUCT_NAME NRF_LOG_ITEM_DATA_DYNAMIC(NRF_LOG_MODULE_NAME);
+extern nrf_log_module_dynamic_data_t NRF_LOG_ITEM_DATA_DYNAMIC(NRF_LOG_MODULE_NAME);
+extern _CONST nrf_log_module_const_data_t NRF_LOG_ITEM_DATA_CONST(NRF_LOG_MODULE_NAME);
 
 /**
  * Set of macros for encoding and decoding header for log entries.
- * There are 3 types of entries:
+ * There are 2 types of entries:
  * 1. Standard entry (STD)
  *    An entry consists of header, pointer to string and values. Header contains
  *    severity leveland determines number of arguments and thus size of the entry.
@@ -334,29 +350,11 @@ extern NRF_LOG_DYNAMIC_STRUCT_NAME NRF_LOG_ITEM_DATA_DYNAMIC(NRF_LOG_MODULE_NAME
  *    |  data |       dummy          |
  *    --------------------------------
  *
- * 3. Pushed string. If string is pushed into the logger internal buffer it is
- *    stored as PUSHED entry. It consists of header, unused data (optional) and
- *    string. Unused data is present if string does not not fit into a buffer
- *    without wrapping (and string cannot be wrapped). In that case header
- *    contains information about offset.
- *
- *    --------------------------------
- *    |TYPE| OFFSET   |      LEN     |
- *    |------------------------------|
- *    |           OFFSET             |
- *    |------------------------------|
- * end|           OFFSET             |
- *   0|------------------------------|
- *    |           STRING             |
- *    |------------------------------|
- *    |  STRING |     dummy          |
- *    --------------------------------
  */
 
 #define STD_ADDR_MASK       ((uint32_t)(1U << 22) - 1U)
 #define HEADER_TYPE_STD     1U
 #define HEADER_TYPE_HEXDUMP 2U
-#define HEADER_TYPE_PUSHED  0U
 #define HEADER_TYPE_INVALID 3U
 
 typedef struct
@@ -385,38 +383,25 @@ typedef struct
     uint32_t len        : 10;
 } nrf_log_hexdump_header_t;
 
-typedef struct
-{
-    uint32_t type       : 2;
-    uint32_t reserved0  : 4;
-    uint32_t offset     : 10;
-    uint32_t reserved1  : 6;
-    uint32_t len        : 10;
-} nrf_log_pushed_header_t;
-
 typedef union
 {
     nrf_log_generic_header_t generic;
     nrf_log_std_header_t     std;
     nrf_log_hexdump_header_t hexdump;
-    nrf_log_pushed_header_t  pushed;
     uint32_t                 raw;
 } nrf_log_main_header_t;
 
 typedef struct
 {
     nrf_log_main_header_t base;
-    uint32_t module_id;
+    uint16_t module_id;
+    uint16_t dropped;
     uint32_t timestamp;
 } nrf_log_header_t;
 
 #define HEADER_SIZE         (sizeof(nrf_log_header_t)/sizeof(uint32_t) - \
                 (NRF_LOG_USES_TIMESTAMP ? 0 : 1))
 
-#define PUSHED_HEADER_SIZE (sizeof(nrf_log_pushed_header_t)/sizeof(uint32_t))
-
-//Implementation assumes that pushed header has one word.
-STATIC_ASSERT(PUSHED_HEADER_SIZE == 1);
 /**
  * @brief A function for logging raw string.
  *

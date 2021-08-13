@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2020, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -37,55 +37,53 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-#ifndef NRF_LOG_CTRL_INTERNAL_H
-#define NRF_LOG_CTRL_INTERNAL_H
+
 /**
- * @cond (NODOX)
- * @defgroup nrf_log_ctrl_internal Auxiliary internal types declarations
+ * @defgroup nrf_strerror Error code to string converter
+ * @ingroup app_common
+ *
+ * @brief Module for converting error code into a printable string.
  * @{
- * @internal
  */
+#ifndef NRF_STRERROR_H__
+#define NRF_STRERROR_H__
 
-#include "sdk_common.h"
-#if NRF_MODULE_ENABLED(NRF_LOG)
+#include "sdk_errors.h"
 
-#define NRF_LOG_LFCLK_FREQ 32768
-
-#ifdef APP_TIMER_CONFIG_RTC_FREQUENCY
-#define LOG_TIMESTAMP_DEFAULT_FREQUENCY ((NRF_LOG_TIMESTAMP_DEFAULT_FREQUENCY == 0) ?              \
-                                       (NRF_LOG_LFCLK_FREQ/(APP_TIMER_CONFIG_RTC_FREQUENCY + 1)) : \
-                                        NRF_LOG_TIMESTAMP_DEFAULT_FREQUENCY)
-#else
-#define LOG_TIMESTAMP_DEFAULT_FREQUENCY NRF_LOG_TIMESTAMP_DEFAULT_FREQUENCY
+#ifdef __cplusplus
+extern "C" {
 #endif
 
-#define NRF_LOG_INTERNAL_INIT(...)               \
-        nrf_log_init(GET_VA_ARG_1(__VA_ARGS__),  \
-                     GET_VA_ARG_1(GET_ARGS_AFTER_1(__VA_ARGS__, LOG_TIMESTAMP_DEFAULT_FREQUENCY)))
-
-#define NRF_LOG_INTERNAL_PROCESS() nrf_log_frontend_dequeue()
-#define NRF_LOG_INTERNAL_FLUSH()            \
-    do {                                    \
-        while (NRF_LOG_INTERNAL_PROCESS()); \
-    } while (0)
-
-#define NRF_LOG_INTERNAL_FINAL_FLUSH()      \
-    do {                                    \
-        nrf_log_panic();                    \
-        NRF_LOG_INTERNAL_FLUSH();           \
-    } while (0)
-
-
-#else // NRF_MODULE_ENABLED(NRF_LOG)
-#define NRF_LOG_INTERNAL_PROCESS()            false
-#define NRF_LOG_INTERNAL_FLUSH()
-#define NRF_LOG_INTERNAL_INIT(timestamp_func) NRF_SUCCESS
-#define NRF_LOG_INTERNAL_HANDLERS_SET(default_handler, bytes_handler) \
-    UNUSED_PARAMETER(default_handler); UNUSED_PARAMETER(bytes_handler)
-#define NRF_LOG_INTERNAL_FINAL_FLUSH()
-#endif // NRF_MODULE_ENABLED(NRF_LOG)
-
-/** @}
- * @endcond
+/**
+ * @brief Function for getting a printable error string.
+ *
+ * @param code Error code to convert.
+ *
+ * @note This function cannot fail.
+ *       For the function that may fail with error translation, see @ref nrf_strerror_find.
+ *
+ * @return Pointer to the printable string.
+ *         If the string is not found,
+ *         it returns a simple string that says that the error is unknown.
  */
-#endif // NRF_LOG_CTRL_INTERNAL_H
+char const * nrf_strerror_get(ret_code_t code);
+
+/**
+ * @brief Function for finding a printable error string.
+ *
+ * This function gets the error string in the same way as @ref nrf_strerror_get,
+ * but if the string is not found, it returns NULL.
+ *
+ * @param code  Error code to convert.
+ * @return      Pointer to the printable string.
+ *              If the string is not found, NULL is returned.
+ */
+char const * nrf_strerror_find(ret_code_t code);
+
+/** @} */
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* NRF_STRERROR_H__ */
