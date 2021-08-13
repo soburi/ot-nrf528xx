@@ -27,6 +27,8 @@
 #
 
 cmake_minimum_required(VERSION 3.10.2)
+cmake_policy(SET CMP0079 OLD)
+
 project(ot-nrf528xx VERSION 0.2.0)
 
 set(NRF_PLATFORM_VALUES
@@ -57,5 +59,46 @@ target_include_directories(ot-config INTERFACE
     ${PROJECT_SOURCE_DIR}/src/${NRF_PLATFORM}
 )
 
+# https://cmake.org/cmake/help/latest/command/target_include_directories.html
+function(zephyr_include_directories)
+  foreach(arg ${ARGV})
+    if(IS_ABSOLUTE ${arg})
+      set(path ${arg})
+    else()
+      set(path ${CMAKE_CURRENT_SOURCE_DIR}/${arg})
+    endif()
+    target_include_directories(ot-config INTERFACE ${path})
+  endforeach()
+endfunction()
+
+
+function(add_subdirectory_ifdef feature_toggle source_dir)
+  if(${${feature_toggle}})
+    add_subdirectory(${source_dir} ${ARGN})
+  endif()
+endfunction()
+
+function(nrfxlib_calculate_lib_path lib_path)
+	set(${lib_path} "lib/nRF52840/hard-float" PARENT_SCOPE)
+endfunction()
+
+function(assert cond msg)
+endfunction()
+
+function(zephyr_link_libraries)
+	target_link_libraries(ot-config INTERFACE ${ARGV})
+endfunction()
+
+target_link_libraries(ot-config INTERFACE nrf-802154-platform)
+
+set(CONFIG_NRF802154_DRIVER 1)
+set(CONFIG_MPSL 1)
+set(CONFIG_SOC nRF52840_XXAA)
+set(CONFIG_FPU 1)
+set(CONFIG_FP_HARDABI 1)
+set(GCC_M_CPU cortex-m4)
+
 add_subdirectory(src)
 add_subdirectory(third_party)
+
+add_subdirectory(nrf_802154_sl_platform)
