@@ -30,22 +30,6 @@ set(COMMON_INCLUDES
     ${PROJECT_SOURCE_DIR}/openthread/include
     ${PROJECT_SOURCE_DIR}/openthread/src
     ${PROJECT_SOURCE_DIR}/openthread/src/core
-    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor//sdk-nrfxlib/nrf_802154/driver/include
-    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor//sdk-nrfxlib/nrf_802154/driver/include/platform
-    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor//sdk-nrfxlib/nrf_802154/driver/src
-    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor//sdk-nrfxlib/nrf_802154/driver/src/fal
-    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor//sdk-nrfxlib/nrf_802154/driver/src/mac_features
-    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor//sdk-nrfxlib/nrf_802154/driver/src/mac_features/ack_generator
-    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor//sdk-nrfxlib/nrf_802154/serialization/include/host
-    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor//sdk-nrfxlib/nrf_802154/serialization/include/platform
-    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor//sdk-nrfxlib/nrf_802154/serialization/include/serialization
-    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor//sdk-nrfxlib/nrf_802154/serialization/spinel_base
-    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor//sdk-nrfxlib/nrf_802154/serialization/src/include
-    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor//sdk-nrfxlib/nrf_802154/sl/include
-    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor//sdk-nrfxlib/nrf_802154/sl/include/platform
-    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor//sdk-nrfxlib/nrf_802154/sl/include/rsch
-    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor//sdk-nrfxlib/nrf_802154/sl/include/timer
-    ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor//sdk-nrfxlib/nrf_802154/sl/sl_opensource/include
 )
 
 set(EXAMPLE_INCLUDES

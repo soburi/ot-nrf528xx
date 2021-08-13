@@ -56,11 +56,11 @@ target_include_directories(nrf-802154-platform
         ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/drivers/power
         ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/drivers/systick
         ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/drivers/usbd
+        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/dependencies/legacy
         ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx
         ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/hal
         ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/drivers
         ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/drivers/include
-        ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/dependencies/legacy
         ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/mdk
         ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/nrfx/soc
         ${PROJECT_SOURCE_DIR}/third_party/NordicSemiconductor/softdevice/s140/headers
