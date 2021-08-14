@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2001-2019, Arm Limited and Contributors. All rights reserved.
  *
- * SPDX-License-Identifier: BSD-3-Clause
+ * SPDX-License-Identifier: BSD-3-Clause OR Arm’s non-OSI source license
  */
 
 #ifndef MBEDTLS_CHACHA20_ALT_H
@@ -24,7 +24,7 @@ extern "C"
 /************************ Defines ******************************/
 
 /*! The size of the ChaCha user-context in words. */
-#define MBEDTLS_CHACHA_USER_CTX_SIZE_IN_WORDS         17
+#define MBEDTLS_CHACHA_USER_CTX_SIZE_IN_WORDS         25
 /*! The size of the ChaCha block in Bytes. */
 #define MBEDTLS_CHACHA_BLOCK_SIZE_BYTES               64
 /*! The size of the ChaCha block in Bytes. As defined in rfc7539 */
