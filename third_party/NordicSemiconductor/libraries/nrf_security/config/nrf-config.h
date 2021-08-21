@@ -363,18 +363,18 @@
 //#define MBEDTLS_BLOWFISH_ALT
 //#define MBEDTLS_CAMELLIA_ALT
 #define MBEDTLS_CCM_ALT
-/* #undef MBEDTLS_CHACHA20_ALT */
-/* #undef MBEDTLS_CHACHAPOLY_ALT */
+#define MBEDTLS_CHACHA20_ALT
+#define MBEDTLS_CHACHAPOLY_ALT
 #define MBEDTLS_CMAC_ALT
 //#define MBEDTLS_DES_ALT
-/* #undef MBEDTLS_DHM_ALT */
+#define MBEDTLS_DHM_ALT
 /* #undef MBEDTLS_ECJPAKE_ALT */
 /* #undef MBEDTLS_GCM_ALT */
 //#define MBEDTLS_NIST_KW_ALT
 //#define MBEDTLS_MD2_ALT
 //#define MBEDTLS_MD4_ALT
 //#define MBEDTLS_MD5_ALT
-/* #undef MBEDTLS_POLY1305_ALT */
+#define MBEDTLS_POLY1305_ALT
 //#define MBEDTLS_RIPEMD160_ALT
 #define MBEDTLS_ECP_ALT
 #define MBEDTLS_RSA_ALT
@@ -605,7 +605,7 @@
  *
  * Enable Cipher Feedback mode (CFB) for symmetric ciphers.
  */
-/* #undef MBEDTLS_CIPHER_MODE_CFB */
+#define MBEDTLS_CIPHER_MODE_CFB
 
 /**
  * \def MBEDTLS_CIPHER_MODE_CTR
@@ -619,14 +619,14 @@
  *
  * Enable Output Feedback mode (OFB) for symmetric ciphers.
  */
-/* #undef MBEDTLS_CIPHER_MODE_OFB */
+#define MBEDTLS_CIPHER_MODE_OFB
 
 /**
  * \def MBEDTLS_CIPHER_MODE_XTS
  *
  * Enable Xor-encrypt-xor with ciphertext stealing mode (XTS) for AES.
  */
-/* #undef MBEDTLS_CIPHER_MODE_XTS */
+#define MBEDTLS_CIPHER_MODE_XTS
 
 /**
  * \def MBEDTLS_CIPHER_NULL_CIPHER
@@ -672,10 +672,10 @@
  *
  * Enable padding modes in the cipher layer.
  */
-/* #undef MBEDTLS_CIPHER_PADDING_PKCS7 */
-/* #undef MBEDTLS_CIPHER_PADDING_ONE_AND_ZEROS */
+#define MBEDTLS_CIPHER_PADDING_PKCS7
+#define MBEDTLS_CIPHER_PADDING_ONE_AND_ZEROS
 #define MBEDTLS_CIPHER_PADDING_ZEROS_AND_LEN
-/* #undef MBEDTLS_CIPHER_PADDING_ZEROS */
+#define MBEDTLS_CIPHER_PADDING_ZEROS
 
 /** \def MBEDTLS_CTR_DRBG_USE_128_BIT_KEY
  *
@@ -2548,7 +2548,7 @@
  *
  * This module requires: MBEDTLS_CHACHA20_C, MBEDTLS_POLY1305_C
  */
-/* #undef MBEDTLS_CHACHAPOLY_C */
+#define MBEDTLS_CHACHAPOLY_C
 
 /**
  * \def MBEDTLS_CIPHER_C
@@ -2763,7 +2763,7 @@
  * This module enables the AES-GCM and CAMELLIA-GCM ciphersuites, if other
  * requisites are enabled as well.
  */
-#define MBEDTLS_GCM_C
+/* #undef MBEDTLS_GCM_C */
 
 /**
  * \def MBEDTLS_HAVEGE_C
@@ -3140,7 +3140,7 @@
  * Requires: MBEDTLS_CTR_DRBG_C, MBEDTLS_ENTROPY_C
  *
  */
-#define MBEDTLS_PSA_CRYPTO_C
+/* #undef MBEDTLS_PSA_CRYPTO_C */
 
 /**
  * \def MBEDTLS_PSA_CRYPTO_SE_C
@@ -3529,8 +3529,8 @@
  */
 
 /* MPI / BIGNUM options */
-#define MBEDTLS_MPI_WINDOW_SIZE         6 /**< Maximum windows size used. */
-#define MBEDTLS_MPI_MAX_SIZE            1024 /**< Maximum number of bytes for usable MPIs. */
+#define MBEDTLS_MPI_WINDOW_SIZE         1 /**< Maximum windows size used. */
+#define MBEDTLS_MPI_MAX_SIZE            32 /**< Maximum number of bytes for usable MPIs. */
 
 /* CTR_DRBG options */
 //#define MBEDTLS_CTR_DRBG_ENTROPY_LEN               48 /**< Amount of entropy used per seed by default (48 with SHA-512, 32 with SHA-256) */
@@ -3550,12 +3550,12 @@ it is (2^48 - 1), our restriction is :  (int - 0xFFFF - 0xF).*/
 //#define MBEDTLS_HMAC_DRBG_MAX_SEED_INPUT      384 /**< Maximum size of (re)seed buffer */
 
 /* ECP options */
-#define MBEDTLS_ECP_MAX_BITS          521 /**< Maximum bit size of groups */
-#define MBEDTLS_ECP_WINDOW_SIZE       6 /**< Maximum window size used */
+#define MBEDTLS_ECP_MAX_BITS          256 /**< Maximum bit size of groups */
+#define MBEDTLS_ECP_WINDOW_SIZE       2 /**< Maximum window size used */
 #define MBEDTLS_ECP_FIXED_POINT_OPTIM 1 /**< Enable fixed-point speed-up */
 
 /* Entropy options */
-#define MBEDTLS_ENTROPY_MAX_SOURCES             1 /**< Maximum number of sources supported */
+#define MBEDTLS_ENTROPY_MAX_SOURCES             20 /**< Maximum number of sources supported */
 #define MBEDTLS_ENTROPY_MAX_GATHER                   144 /**< Maximum amount requested from entropy sources */
 //#define MBEDTLS_ENTROPY_MIN_HARDWARE               32 /**< Default minimum number of bytes required for the hardware entropy source mbedtls_hardware_poll() before entropy is released */
 
@@ -3790,7 +3790,7 @@ it is (2^48 - 1), our restriction is :  (int - 0xFFFF - 0xF).*/
  *
  * The value below is only an example, not the default.
  */
-/* #undef MBEDTLS_SSL_CIPHERSUITES */
+#define MBEDTLS_SSL_CIPHERSUITES MBEDTLS_TLS_ECJPAKE_WITH_AES_128_CCM_8
 
 /* X509 options */
 //#define MBEDTLS_X509_MAX_INTERMEDIATE_CA   8   /**< Maximum number of intermediate CAs in a verification chain. */
@@ -3895,8 +3895,8 @@ it is (2^48 - 1), our restriction is :  (int - 0xFFFF - 0xF).*/
 #define MBEDTLS_CIPHER_AES_256_CBC_C
 #define MBEDTLS_CIPHER_AES_256_CTR_C
 #define MBEDTLS_CIPHER_AES_256_CCM_C
-/* #undef MBEDTLS_CIPHER_AES_256_CFB_C */
-/* #undef MBEDTLS_CIPHER_AES_256_OFB_C */
+#define MBEDTLS_CIPHER_AES_256_CFB_C
+#define MBEDTLS_CIPHER_AES_256_OFB_C
 
 
 /*
